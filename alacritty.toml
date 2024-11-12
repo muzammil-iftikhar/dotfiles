@@ -1,0 +1,119 @@
+# alacritty.toml
+# commented lines are the defaults
+# man 5 alacritty (>0.13) for full config manual
+
+import = [
+"C:\\Users\\muzam\\AppData\\Roaming\\alacritty\\themes\\themes\\dracula.toml"
+]
+
+working_directory     = "/home/muzammil"
+live_config_reload    = true
+#ipc_socket            = true
+
+[shell]
+program               = "C:\\WINDOWS\\system32\\wsl.exe"
+args                  = [ "-d Ubuntu-22.04", ]
+
+[env]
+TERM                  = "xterm-256color"
+
+[window]
+#dimensions            = { columns = 0, lines = 0 }
+#position              = { x = 0, y = 0 }
+padding               = { x = 2, y = 2 }
+
+#dynamic_padding       = true
+# decorations           = "None"
+opacity               = 1.0
+# blur                  = true
+startup_mode          = "Maximized"
+# title                 = "Alacritty"
+# dynamic_title         = true
+#class                 = { instance = "Alacritty", general = "Alacritty" }
+decorations_theme_variant = "Dark"
+#resize_increments     = false
+#option_as_alt         = "None"
+
+
+
+[scrolling]
+history               = 5000
+
+multiplier            = 3
+
+[font]
+
+normal                = { family = "DankMono Nerd Font Mono", style = "Regular" }
+
+bold                  = { family = "DankMono Nerd Font Mono", style = "Bold" }
+italic                = { family = "DankMono Nerd Font Mono", style = "Italic" }
+bold_italic           = { family = "DankMono Nerd Font Mono", style = "Bold Italic" }
+size                  = 11
+offset                = { x = 0, y = 1 }
+glyph_offset          = { x = 0, y = 0}
+builtin_box_drawing   = true
+
+# [bell]
+# animation             = "EaseOutExpo"
+# duration              = 3
+
+
+[selection]
+save_to_clipboard     = true
+
+[cursor.style]
+shape                 = "Block"
+blinking              = "Always"
+
+[cursor]
+blink_interval        = 500
+blink_timeout         = 0
+# unfocused_hollow      = true
+#thickness             = 0.15
+
+# osc52 = "Disabled" | "OnlyCopy" | "OnlyPaste" | "CopyPaste"
+[terminal]
+osc52                 = "OnlyCopy"
+
+[mouse]
+
+hide_when_typing      = true
+bindings = [
+
+{ mouse = "Right", mods = "Control", action = "Paste" },
+]
+
+# [keyboard]
+# bindings = [
+#   { key = "V",        mods = "Control|Shift", action = "Paste" },
+#   { key = "C",        mods = "Control|Shift", action = "Copy" },
+#   { key = "Paste",                            action = "Paste" },
+#   { key = "Copy",                             action = "Copy" },
+#   { key = "Insert",   mods = "Shift",         action = "PasteSelection" },
+#   { key = "F",        mods = "Control|Shift", action = "SearchForward",     mode = "~Search" },
+#   { key = "B",        mods = "Control|Shift", action = "SearchBackward",    mode = "~Search" },
+#   { key = "Key0",     mods = "Control",       action = "ResetFontSize" },
+#   { key = "Equals",   mods = "Control",       action = "IncreaseFontSize" },
+
+#   { key = "Minus",    mods = "Control",       action = "DecreaseFontSize" },
+#   { key = "L",        mods = "Control",       action = "ClearLogNotice" },
+#   { key = "L",        mods = "Control",       chars  = "\f" },
+#   { key = "PageUp",   mods = "Shift",         action = "ScrollPageUp",      mode = "~Alt" },
+#   { key = "PageDown", mods = "Shift",         action = "ScrollPageDown",    mode = "~Alt" },
+#   { key = "Up",       mods = "Shift",         action = "ScrollLineUp",      mode = "~Alt" },
+#   { key = "Down",     mods = "Shift",         action = "ScrollLineDown",    mode = "~Alt" },
+
+#   { key = "Home",     mods = "Shift",         action = "ScrollToTop",       mode = "~Alt" },
+#   { key = "End",      mods = "Shift",         action = "ScrollToBottom",    mode = "~Alt" },
+#   {key="K",mods="Alt",mode="Vi",action="ScrollLineUp"}
+# ]
+
+
+[debug]
+#render_timer          = false
+#persistent_logging    = false
+#log_level             = "Warn"
+#renderer              = "None"
+#print_events          = false
+#highlight_damage      = false
+#prefer_egl            = false
