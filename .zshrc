@@ -109,6 +109,7 @@ else
 fi
 
 alias nv=nvim
+alias snv='sudo -E -s nvim'
 alias lg=lazygit
 # end aliases
 
