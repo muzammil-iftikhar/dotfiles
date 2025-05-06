@@ -18,12 +18,6 @@ return {
 		config = function()
 			local map_lsp_keybinds = require("user.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
 
-			-- Default handlers for LSP
-			local default_handlers = {
-				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-			}
-
 			-- Function to run when neovim connects to a Lsp client
 			---@diagnostic disable-next-line: unused-local
 			local on_attach = function(_client, buffer_number)
@@ -61,6 +55,13 @@ return {
 				terraformls = {},
 				gopls = {},
 				ruby_lsp = {},
+				groovyls = {
+					cmd = {
+						"java",
+						"-jar",
+						"/home/muzammil/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
+					},
+				},
 				eslint = {
 					cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=12288" },
 					settings = {
@@ -89,6 +90,7 @@ return {
 			local formatters = {
 				prettierd = {},
 				stylua = {},
+				groovyls = {},
 			}
 
 			local manually_installed_servers = { "ocamllsp", "gleam" }
@@ -113,7 +115,6 @@ return {
 					cmd = config.cmd,
 					capabilities = capabilities,
 					filetypes = config.filetypes,
-					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
 					on_attach = on_attach,
 					settings = config.settings,
 				})
@@ -147,7 +148,7 @@ return {
 			notify_on_error = false,
 			format_on_save = {
 				timeout_ms = 500,
-				lsp_fallback = true,
+				lsp_format = "fallback",
 			},
 			formatters_by_ft = {
 				typescript = { "prettierd", "prettier", stop_after_first = true },
@@ -168,7 +169,7 @@ return {
 				graphql = { "prettierd", "prettier", stop_after_first = true },
 				handlebars = { "prettierd", "prettier", stop_after_first = true },
 				ruby = { "rubyfmt" },
-				terraform = { "terraform_fmt" },
+				groovy = { "npm-groovy-lint" },
 			},
 		},
 	},

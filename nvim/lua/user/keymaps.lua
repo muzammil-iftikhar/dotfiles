@@ -98,6 +98,9 @@ vnoremap(">", ">gv")
 
 -- Diagnostics
 
+-- Show diagnostic description in float
+vim.keymap.set("n", "<leader>D", vim.diagnostic.open_float)
+
 -- Toggle Diagnostics
 local diagnostics_active = true
 vim.keymap.set("n", "<leader>d", function()
@@ -111,37 +114,56 @@ end)
 
 -- Goto next diagnostic of any severity
 nnoremap("]d", function()
-	vim.diagnostic.goto_next({})
+	-- vim.diagnostic.goto_next({})
+	vim.diagnostic.jump({ count = 1, float = true })
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous diagnostic of any severity
 nnoremap("[d", function()
-	vim.diagnostic.goto_pev({})
+	-- vim.diagnostic.goto_prev({})
+	vim.diagnostic.jump({ count = -1, float = true })
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto next error diagnostic
 nnoremap("]e", function()
-	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+	vim.diagnostic.jump({
+		count = 1,
+		severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR },
+		float = true,
+	})
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous error diagnostic
 nnoremap("[e", function()
-	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+	vim.diagnostic.jump({
+		count = -1,
+		severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR },
+		float = true,
+	})
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto next warning diagnostic
 nnoremap("]w", function()
-	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+	vim.diagnostic.jump({
+		count = 1,
+		severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.WARN },
+		float = true,
+	})
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous warning diagnostic
 nnoremap("[w", function()
-	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+	vim.diagnostic.jump({
+	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+		count = -1,
+		severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.WARN },
+		float = true,
+	})
 	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
@@ -251,9 +273,15 @@ M.map_lsp_keybinds = function(buffer_number)
 	)
 
 	-- See `:help K` for why this keymap
-	nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
-	nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
-	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	vim.keymap.set("n", "K", function()
+		vim.lsp.buf.hover({ border = "rounded" })
+	end, { desc = "LSP: Hover Documentation", buffer = buffer_number })
+	vim.keymap.set("n", "<leader>k", function()
+		vim.lsp.buf.signature_help({ border = "rounded" })
+	end, { desc = "LSP: Hover Documentation", buffer = buffer_number })
+	vim.keymap.set("i", "<C-k>", function()
+		vim.lsp.buf.signature_help({ border = "rounded" })
+	end, { desc = "LSP: Hover Documentation", buffer = buffer_number })
 end
 
 -- The following two autocommands are used to highlight references of the

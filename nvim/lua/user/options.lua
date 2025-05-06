@@ -49,6 +49,9 @@ vim.opt.completeopt = { "menuone", "noselect" }
 -- Enable persistent undo history
 vim.opt.undofile = true
 
+-- Set border style for all floating windows
+-- vim.opt.winborder = "rounded"
+
 -- Enable 24-bit color
 vim.opt.termguicolors = true
 
