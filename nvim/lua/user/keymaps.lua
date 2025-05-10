@@ -112,6 +112,11 @@ vim.keymap.set("n", "<leader>d", function()
 	end
 end)
 
+-- Lazygit
+nnoremap("<leader>lg", function()
+	vim.cmd("LazyGit")
+end)
+
 -- Goto next diagnostic of any severity
 nnoremap("]d", function()
 	-- vim.diagnostic.goto_next({})
@@ -159,7 +164,6 @@ end)
 -- Goto previous warning diagnostic
 nnoremap("[w", function()
 	vim.diagnostic.jump({
-	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 		count = -1,
 		severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.WARN },
 		float = true,

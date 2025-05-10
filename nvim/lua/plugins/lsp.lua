@@ -8,6 +8,7 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			"github/copilot.vim",
 
 			-- Install lsp autocompletions
 			"hrsh7th/cmp-nvim-lsp",
