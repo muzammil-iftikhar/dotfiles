@@ -1,7 +1,7 @@
 return {
 	{
 		"nvimdev/hlsearch.nvim",
-		event = { "BufReadPost" },
+		event = "BufReadPost",
 		opts = {},
 	},
 }

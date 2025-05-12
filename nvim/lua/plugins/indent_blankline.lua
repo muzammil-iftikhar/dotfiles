@@ -1,7 +1,7 @@
 return {
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		event = "BufEnter",
+		event = "BufReadPost",
 		config = function()
 			require("ibl").setup({
 				indent = {

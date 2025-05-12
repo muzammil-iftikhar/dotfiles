@@ -3,8 +3,7 @@ local vnoremap = require("user.keymap_utils").vnoremap
 local inoremap = require("user.keymap_utils").inoremap
 local tnoremap = require("user.keymap_utils").tnoremap
 local xnoremap = require("user.keymap_utils").xnoremap
-local harpoon_ui = require("harpoon.ui")
-local harpoon_mark = require("harpoon.mark")
+local harpoon = require("harpoon")
 local utils = require("user.utils")
 
 local M = {}
@@ -82,6 +81,10 @@ end, { desc = "Search current word" })
 -- Press 'U' for redo
 nnoremap("U", "<C-r>")
 
+-- Copilot
+inoremap("<M-.>", "<Plug>(copilot-next)")
+inoremap("<M-,>", "<Plug>(copilot-previous)")
+
 -- Turn off highlighted results
 nnoremap("<leader>no", "<cmd>noh<cr>")
 
@@ -116,6 +119,12 @@ end)
 nnoremap("<leader>lg", function()
 	vim.cmd("LazyGit")
 end)
+
+-- Stop C,D and cc from yanking
+
+nnoremap("C", '"_C')
+nnoremap("D", '"_D')
+nnoremap("cc", '"_cc')
 
 -- Goto next diagnostic of any severity
 nnoremap("]d", function()
@@ -186,44 +195,61 @@ nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
 -- Harpoon keybinds --
 -- Open harpoon ui
 nnoremap("<leader>ho", function()
-	harpoon_ui.toggle_quick_menu()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
 -- Add current file to harpoon
 nnoremap("<leader>ha", function()
-	harpoon_mark.add_file()
+	harpoon:list():add()
 end)
 
 -- Remove current file from harpoon
 nnoremap("<leader>hr", function()
-	harpoon_mark.rm_file()
+	harpoon:list():remove()
+	-- local current_file = vim.api.nvim_buf_get_name(0)
+	-- for i, item in ipairs(harpoon:list().items) do
+	-- 	if item.value == current_file then
+	-- 		table.remove(harpoon:list().items, i)
+	-- 		break
+	-- 	end
+	-- end
+	-- harpoon:list().items = harpoon:list().items
 end)
 
 -- Remove all files from harpoon
 nnoremap("<leader>hc", function()
-	harpoon_mark.clear_all()
+	harpoon:list():clear()
+	print("harpoon list cleared")
 end)
 
 -- Quickly jump to harpooned files
 nnoremap("<leader>1", function()
-	harpoon_ui.nav_file(1)
+	harpoon:list():select(1)
 end)
 
 nnoremap("<leader>2", function()
-	harpoon_ui.nav_file(2)
+	harpoon:list():select(2)
 end)
 
 nnoremap("<leader>3", function()
-	harpoon_ui.nav_file(3)
+	harpoon:list():select(3)
 end)
 
 nnoremap("<leader>4", function()
-	harpoon_ui.nav_file(4)
+	harpoon:list():select(4)
 end)
 
 nnoremap("<leader>5", function()
-	harpoon_ui.nav_file(5)
+	harpoon:list():select(5)
 end)
+
+harpoon:extend({
+	UI_CREATE = function(cx)
+		nnoremap("<C-v>", function()
+			harpoon.ui:select_menu_item({ vsplit = true })
+		end, { buffer = cx.bufnr })
+	end,
+})
 
 -- Git keymaps --
 nnoremap("<leader>gb", ":Gitsigns toggle_current_line_blame<cr>")

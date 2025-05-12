@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd("FileType", {
 return {
 	{
 		"stevearc/oil.nvim",
+		cmd = "Oil",
 		opts = {},
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },

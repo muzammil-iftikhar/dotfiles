@@ -8,7 +8,6 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			"github/copilot.vim",
 
 			-- Install lsp autocompletions
 			"hrsh7th/cmp-nvim-lsp",
@@ -42,7 +41,7 @@ return {
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				-- LSP Servers
-				-- bashls = {},
+				bashls = {},
 				cssls = {},
 				html = {},
 				jsonls = {},
@@ -91,7 +90,9 @@ return {
 			local formatters = {
 				prettierd = {},
 				stylua = {},
-				groovyls = {},
+				black = {},
+				rubyfmt = {},
+				shfmt = {},
 			}
 
 			local manually_installed_servers = { "ocamllsp", "gleam" }
@@ -106,7 +107,7 @@ return {
 				auto_update = true,
 				run_on_start = true,
 				start_delay = 3000,
-				debounce_hours = 12,
+				-- debounce_hours = 12,
 				ensure_installed = ensure_installed,
 			})
 
@@ -128,7 +129,9 @@ return {
 				},
 			})
 
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({
+				automatic_enable = true,
+			})
 
 			-- Configure borderd for LspInfo ui
 			require("lspconfig.ui.windows").default_options.border = "rounded"

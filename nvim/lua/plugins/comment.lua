@@ -1,7 +1,7 @@
 return {
 	{
 		"numToStr/Comment.nvim",
-		event = { "BufEnter" },
+		keys = { "gcc", "gbc", "gc", "gb" },
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			config = function()
