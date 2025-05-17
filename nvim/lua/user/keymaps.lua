@@ -120,12 +120,6 @@ nnoremap("<leader>lg", function()
 	vim.cmd("LazyGit")
 end)
 
--- Stop C,D and cc from yanking
-
-nnoremap("C", '"_C')
-nnoremap("D", '"_D')
-nnoremap("cc", '"_cc')
-
 -- Goto next diagnostic of any severity
 nnoremap("]d", function()
 	-- vim.diagnostic.goto_next({})

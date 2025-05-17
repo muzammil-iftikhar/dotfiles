@@ -29,6 +29,9 @@ vim.opt.wrap = false
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Set statusline
+vim.opt.laststatus = 3
+
 -- Better splitting
 vim.opt.splitbelow = true
 vim.opt.splitright = true

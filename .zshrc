@@ -55,10 +55,7 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# --------------------------------------------------Env Variables Start-------------------------------------------------- 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FZF_BASE="$HOME/.fzf"
@@ -70,9 +67,18 @@ export FZF_ALT_C_COMMAND="fd -t d . --color=never --hidden"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 export FZF_DEFAULT_OPTS="--no-height --color=bg+:#343d46,pointer:#ff3c3c,info:#0dbc79,hl:#0dbc79,hl+:#23d18b"
 export EDITOR=nvim
-# export DISPLAY=$(route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+export XDG_CONFIG_HOME="$HOME/.config"
+# Write all buffers before navigating from Vim to tmux pane
+export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 
-#aliases
+export OPENAI_API_KEY=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
+export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
+export PATH=$PATH:$HOME/go/bin:$HOME/.local/bin:"/mnt/c/Program Files/Oracle/VirtualBox":$HOME/.yarn/bin:$HOME/.rvm/bin:$GOPATH/bin:$HOME/.npm-global/bin:$HOME/.local/bin:/snap/bin:"/mnt/c/Windows/System32":"/mnt/c/Users/Muzammil Iftikhar/AppData/Local/Microsoft/WindowsApps/Microsoft.PowerShell_8wekyb3d8bbwe":$HOME/.local/share/nvim/mason/bin
+
+# --------------------------------------------------Env Variables End-------------------------------------------------- 
+
+# --------------------------------------------------Alias Start--------------------------------------------------
 if command -v exa >/dev/null; then
     alias ls=~/exa-wrapper.sh
 else
@@ -80,23 +86,11 @@ else
 fi
 
 alias nv='nvim'
-# end aliases
+# --------------------------------------------------Alias End--------------------------------------------------
 
-# Write all buffers before navigating from Vim to tmux pane
-export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
-
-export OPENAI_API_KEY=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
-export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
-
-# Golang environment variables
-# export GOPATH=/mnt/c/Users/muzam/OneDrive/Desktop/learning/golang
-
-# cmd.exe and pwsh.exe were added for vagrant
-export PATH=$PATH:$HOME/go/bin:$HOME/.local/bin:"/mnt/c/Program Files/Oracle/VirtualBox":$HOME/.yarn/bin:$HOME/.rvm/bin:$GOPATH/bin:$HOME/.npm-global/bin:$HOME/.local/bin:/snap/bin:"/mnt/c/Windows/System32":"/mnt/c/Users/Muzammil Iftikhar/AppData/Local/Microsoft/WindowsApps/Microsoft.PowerShell_8wekyb3d8bbwe":$HOME/.local/share/nvim/mason/bin
+# Enable terraform autocompletion
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /usr/bin/terraform terraform
 
 # For cargo
 . "$HOME/.cargo/env"

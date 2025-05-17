@@ -95,7 +95,7 @@ return {
 				shfmt = {},
 			}
 
-			local manually_installed_servers = { "ocamllsp", "gleam" }
+			local manually_installed_servers = { "abc" }
 
 			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
 
@@ -173,7 +173,7 @@ return {
 				graphql = { "prettierd", "prettier", stop_after_first = true },
 				handlebars = { "prettierd", "prettier", stop_after_first = true },
 				ruby = { "rubyfmt" },
-				groovy = { "npm-groovy-lint" },
+				-- groovy = { "npm-groovy-lint" },
 			},
 		},
 	},
