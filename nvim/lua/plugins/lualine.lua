@@ -35,21 +35,20 @@ return {
 				local current_mark = "—"
 
 				local function get_current_index()
-					local current_path = vim.api.nvim_buf_get_name(0)
-					local buffer_name = vim.loop.fs_realpath(current_path)
+					local buffer_name = vim.fn.expand("%:t")
 					for index, item in ipairs(harpoon:list().items) do
-						if item.value == buffer_name then
+						item_value = vim.fn.fnamemodify(item.value, ":t")
+						if item_value == buffer_name then
 							return index
 						end
 					end
-					return nil -- not found
+					return nil
 				end
 
 				local mark_idx = get_current_index()
 				if mark_idx ~= nil then
 					current_mark = tostring(mark_idx)
 				end
-
 				return string.format("󱡅 %s/%d", current_mark, total_marks)
 			end
 
