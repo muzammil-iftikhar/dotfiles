@@ -8,7 +8,14 @@ return {
 		event = "VeryLazy",
 		version = false,
 		opts = {
-			provider = "copilot",
+			-- provider = "copilot",
+			provider = "openai",
+			providers = {
+				openai = {
+					endpoint = "https://api.openai.com/v1",
+					model = "gpt-4o-mini",
+				},
+			},
 		},
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",

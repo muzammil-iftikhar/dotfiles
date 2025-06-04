@@ -37,7 +37,7 @@ return {
 				local function get_current_index()
 					local buffer_name = vim.fn.expand("%:t")
 					for index, item in ipairs(harpoon:list().items) do
-						item_value = vim.fn.fnamemodify(item.value, ":t")
+						local item_value = vim.fn.fnamemodify(item.value, ":t")
 						if item_value == buffer_name then
 							return index
 						end

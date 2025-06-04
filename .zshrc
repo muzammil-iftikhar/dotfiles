@@ -53,6 +53,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=166"
 
 source $ZSH/oh-my-zsh.sh
 
+# Set zsh completions for gh-copilot extension
+eval "$(gh copilot alias -- zsh)"
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 # --------------------------------------------------Env Variables Start-------------------------------------------------- 
@@ -60,20 +63,30 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FZF_BASE="$HOME/.fzf"
 export ZSHZ_UNCOMMON=1
+
+# Fzf env variables
 export FZF_DEFAULT_COMMAND="fd -t f --color=never --hidden"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :50 {}'"
 export FZF_ALT_C_COMMAND="fd -t d . --color=never --hidden"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 export FZF_DEFAULT_OPTS="--no-height --color=bg+:#343d46,pointer:#ff3c3c,info:#0dbc79,hl:#0dbc79,hl+:#23d18b"
+
 export EDITOR=nvim
 export XDG_CONFIG_HOME="$HOME/.config"
+
 # Write all buffers before navigating from Vim to tmux pane
 export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 
-export OPENAI_API_KEY=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
+# Ai env variables
+export OPENROUTER_API_KEY="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"
+export OPENAI_API_KEY="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"
+export OLLAMA_API_KEY=Ollama
+
+# Vagrant wsl env variables
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
+
 export PATH=$PATH:$HOME/go/bin:$HOME/.local/bin:"/mnt/c/Program Files/Oracle/VirtualBox":$HOME/.yarn/bin:$HOME/.rvm/bin:$GOPATH/bin:$HOME/.npm-global/bin:$HOME/.local/bin:/snap/bin:"/mnt/c/Windows/System32":"/mnt/c/Users/Muzammil Iftikhar/AppData/Local/Microsoft/WindowsApps/Microsoft.PowerShell_8wekyb3d8bbwe":$HOME/.local/share/nvim/mason/bin
 
 # --------------------------------------------------Env Variables End-------------------------------------------------- 
