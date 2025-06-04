@@ -79,8 +79,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 
 # Ai env variables
-export OPENROUTER_API_KEY="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"
-export OPENAI_API_KEY="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"
 export OLLAMA_API_KEY=Ollama
 
 # Vagrant wsl env variables
