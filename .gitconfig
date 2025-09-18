@@ -2,7 +2,7 @@
 	name = Muzammil Iftikhar
 	email = muzammil.iftikhar@gmail.com
 [core]
-	editor = nvim --wait
+	editor = nvim
 	autocrlf = input
   pager = delta --dark --line-numbers
 [interactive]
@@ -15,13 +15,24 @@
   side-by-side = true
   line-numbers = true
   features = mantis-shrimp
-[merge]
-  conflictstyle = diff3
-[diff]
-  colorMoved = default
 [color]
     ui = true
 [alias]
   prompt = !"prompt_git() { local s=''; local branchName=''; if [ \"$(git rev-parse --is-inside-work-tree &>/dev/null; echo \"${?}\")\" == '0' ]; then if [ \"$(git rev-parse --is-inside-git-dir 2> /dev/null)\" == 'false' ]; then if [[ -O \"$(git rev-parse --show-toplevel)/.git/index\" ]]; then git update-index --really-refresh -q &> /dev/null; fi; if ! git diff --quiet --ignore-submodules --cached; then s+='+'; fi; if ! git diff-files --quiet --ignore-submodules --; then s+='!'; fi; if [ -n \"$(git ls-files --others --exclude-standard)\" ]; then s+='?'; fi; if git rev-parse --verify refs/stash &> /dev/null; then s+='$'; fi; fi; branchName=\"$(git symbolic-ref --quiet --short HEAD 2> /dev/null || git rev-parse --short HEAD 2> /dev/null || echo '(unknown)')\"; echo \"(${1}${branchName} ${s})\"; else return; fi; }"
 [init]
 	defaultBranch = main
+[diff]
+  colorMoved = default
+	tool = meld
+[difftool "meld"]
+  cmd = $HOME/meld-wrapper.sh "$LOCAL" "$REMOTE"
+  prompt = false
+[merge]
+  conflictstyle = diff3
+	tool = meld
+	ff = false
+; [mergetool "meld"]
+; 	cmd = $HOME/meld-wrapper.sh "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+; 	trustExitCode = false
+[mergetool]
+	prompt = false

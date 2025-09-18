@@ -45,13 +45,12 @@ nnoremap("<C-u>", "<C-u>zz")
 nnoremap("<C-d>", "<C-d>zz")
 nnoremap("{", "{zz")
 nnoremap("}", "}zz")
-nnoremap("N", "Nzz")
-nnoremap("n", "nzz")
+-- nnoremap("N", "Nzz")
+-- nnoremap("n", "nzz")
 nnoremap("G", "Gzz")
 nnoremap("gg", "ggzz")
 nnoremap("<C-i>", "<C-i>zz")
 nnoremap("<C-o>", "<C-o>zz")
-nnoremap("%", "%zz")
 nnoremap("*", "*zz")
 nnoremap("#", "#zz")
 
@@ -94,10 +93,6 @@ nnoremap("<leader>lw", "<cmd>set wrap!<cr>")
 -- Move lines up and down
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
-
--- Stay in indent mode
-vnoremap("<", "<gv")
-vnoremap(">", ">gv")
 
 -- Diagnostics
 
@@ -344,10 +339,6 @@ vnoremap("H", "^")
 -- Press 'H', 'L' to jump to start/end of a line (first/last char)
 nnoremap("L", "$")
 nnoremap("H", "^")
-
--- Paste without losing the contents of the register
-vnoremap("<C-M-j>", ":m '>+1<CR>gv=gv")
-vnoremap("<C-M-k>", ":m '<-2<CR>gv=gv")
 
 -- Terminal --
 -- Enter normal mode while in a terminal

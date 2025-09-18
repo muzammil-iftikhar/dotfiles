@@ -16,6 +16,12 @@ return {
 					model = "gpt-4o-mini",
 				},
 			},
+			windows = {
+				width = 40,
+				ask = {
+					start_insert = false,
+				},
+			},
 		},
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
