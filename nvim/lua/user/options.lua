@@ -22,8 +22,13 @@ vim.opt.hlsearch = true
 vim.opt.wrap = false
 
 -- Show end line characters
--- vim.opt.list = true
--- vim.opt.listchars = { eol = "↵" }
+vim.opt.list = true
+
+vim.opt.listchars = {
+	eol = "↵", -- show $ at end of line
+	tab = "▸ ", -- show tabs as ▸
+	trail = "·", -- show trailing spaces as ·
+}
 
 -- Set leader key to space
 vim.g.mapleader = " "

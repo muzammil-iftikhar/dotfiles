@@ -112,14 +112,26 @@ return {
 			})
 
 			-- Iterate over our servers and set them up
+			-- for name, config in pairs(servers) do
+			-- 	require("lspconfig")[name].setup({
+			-- 		cmd = config.cmd,
+			-- 		capabilities = capabilities,
+			-- 		filetypes = config.filetypes,
+			-- 		on_attach = on_attach,
+			-- 		settings = config.settings,
+			-- 	})
+			-- end
+
 			for name, config in pairs(servers) do
-				require("lspconfig")[name].setup({
+				vim.lsp.config[name] = {
 					cmd = config.cmd,
-					capabilities = capabilities,
 					filetypes = config.filetypes,
-					on_attach = on_attach,
 					settings = config.settings,
-				})
+					on_attach = on_attach,
+					capabilities = capabilities,
+				}
+				-- Enable the server to start the client
+				vim.lsp.enable(name)
 			end
 
 			-- Setup mason so it can manage 3rd party LSP servers

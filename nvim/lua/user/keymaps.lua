@@ -69,7 +69,8 @@ end) ]]
 
 -- Open Spectre for global find/replace
 nnoremap("<leader>s", function()
-	require("spectre").toggle()
+	-- require("spectre").toggle()
+	require("spectre").open_file_search()
 end)
 
 -- Open Spectre for global find/replace for the word under the cursor in normal mode
@@ -353,5 +354,25 @@ tnoremap("<C-l>", [[<Cmd>wincmd l<CR>]])
 
 -- Reenable default <space> functionality to prevent input delay
 tnoremap("<space>", "<space>")
+
+-- Leap keymaps --
+vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
+vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
+vim.keymap.set({ "n", "x", "o" }, "gs", "<Plug>(leap-from-window)")
+vim.keymap.set({ "n", "x", "o" }, "f", function()
+	require("leap").leap({ inputlen = 1 })
+end, { desc = "Enhanced forward f motion" })
+
+vim.keymap.set({ "n", "x", "o" }, "F", function()
+	require("leap").leap({ inputlen = 1, backward = true })
+end, { desc = "Enhanced backward F motion" })
+
+vim.keymap.set({ "x", "o" }, "t", function()
+	require("leap").leap({ inputlen = 1, offset = -1 })
+end, { desc = "Enhanced forward till motion" })
+
+vim.keymap.set({ "x", "o" }, "T", function()
+	require("leap").leap({ inputlen = 1, backward = true, offset = 1 })
+end, { desc = "Enhanced backward till motion" })
 
 return M

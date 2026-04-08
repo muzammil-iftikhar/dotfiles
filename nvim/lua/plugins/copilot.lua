@@ -13,7 +13,7 @@ return {
 			providers = {
 				openai = {
 					endpoint = "https://api.openai.com/v1",
-					model = "gpt-4o-mini",
+					model = "gpt-5-mini",
 				},
 			},
 			windows = {

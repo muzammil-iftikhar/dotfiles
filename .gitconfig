@@ -36,3 +36,9 @@
 ; 	trustExitCode = false
 [mergetool]
 	prompt = false
+[credential]
+	helper = store
+[http]
+	postBuffer = 524288000
+[fetch]
+	prune = true

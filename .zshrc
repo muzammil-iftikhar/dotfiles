@@ -1,11 +1,9 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Tmux script
-if [ -z $TMUX ]; then
+if [ -z "$TMUX" ]; then
   # Check if 'syncthing' session exists
   if ! tmux has-session -t syncthing 2>/dev/null; then
     # Create session and run command inside it
@@ -72,9 +70,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=166"
 
 source $ZSH/oh-my-zsh.sh
 
-# Set zsh completions for gh-copilot extension
-eval "$(gh copilot alias -- zsh)"
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 # --------------------------------------------------Env Variables Start--------------------------------------------------
@@ -98,12 +93,14 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 
 # Ai env variables
-export OPENROUTER_API_KEY=""
+export OPENROUTER_API_KEY="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"
 export OPENAI_API_KEY=""
 export OLLAMA_API_KEY=Ollama
-export ANTHROPIC_API_KEY=""
-export GEMINI_API_KEY=""
-export CHUTES_OPENAI_API_KEY=""
+# export ANTHROPIC_API_KEY=""
+export MAX_MCP_OUTPUT_TOKENS=50000 # This is for the claude code cli
+export GEMINI_API_KEY="AIzaSyDyN_BzTiD2Z9XqL3ZWgFTLXbmv73gDA_Y"
+export CHUTES_OPENAI_API_KEY="cpk_ee75d20ae3534937bdae4925bd7d6a8e.13827501a59b5820af3bb3ceb0c614df.0FFPdJorJjL00eb2BG2DNItWu6Y7lu4R"
+export MINIMAX_API_KEY="sk-api-OqFq7ci_vodJkzrsSGnNmNYXF_qtbk96XfvKk6l6Yz8Q1bjyqTNlY0_Vkr9qcnUoaGT3rMMRvA1nZxpqzcBnXytJ1H41E0Kyck2Rs0BsagIUVEsIWAbYBw8"
 
 # Vagrant wsl env variables
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
@@ -133,11 +130,17 @@ alias nv='nvim'
 # For ruby-rbenv
 eval "$(rbenv init - zsh)"
 
-# For startship prompt
-export STARSHIP_CONFIG=/home/muzammil/.config/startship/starship.toml
+# For starship prompt
+export STARSHIP_CONFIG=/home/muzammil/.config/starship/starship.toml
 eval "$(starship init zsh)"
 
-fastfetch
+fastfetch --logo /home/muzammil/.config/fastfetch/logos/nerd.txt --logo-color-1 red
 
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh"
+# bun completions
+[ -s "/home/muzammil/.bun/_bun" ] && source "/home/muzammil/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/muzammil/.bun/bin/bun "/home/muzammil/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
