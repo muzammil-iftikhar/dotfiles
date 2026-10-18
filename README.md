@@ -102,8 +102,8 @@ Opening tmux will auto-create the `syncthing` and `default` sessions (see `.zshr
 
 ## The `pi/` backup
 
-`dotfiles/pi/` is a restore set for `~/.pi/agent`, the config directory of the [pi](https://github.com/earendil-works/pi) coding agent; `./pi/restore.sh` rebuilds it on a new machine (it refuses to overwrite an existing `~/.pi/agent` unless given `--force`).
+`dotfiles/pi/` is a restore set for `~/.pi/agent`, the config directory of the [pi](https://github.com/earendil-works/pi) coding agent. `pi/MANIFEST.md` holds the full inventory and the numbered steps to rebuild it on a new machine.
 
-It stores only files that have **no git remote**; everything else is re-cloned from https URLs pinned to full SHAs. Credentials and sessions are never stored — re-authenticate after restoring. See `pi/MANIFEST.md` for the full inventory and `pi/restore.sh` for the exact steps.
+It stores only files that have **no git remote**; everything else is re-cloned from https URLs pinned to full SHAs. Credentials and sessions are never stored — re-authenticate after restoring.
 
 The directory is `pi/`, deliberately **not** `.pi/`: `.pi/` is pi's own project-config location, and running pi in this repo would populate it with ~89M of runtime state. The root `.gitignore` blocks it for that reason.

@@ -3,11 +3,11 @@
 - **Source dir:** `~/.pi/agent` (`/home/muzammil/.pi/agent`)
 - **Location:** `dotfiles/pi/` (this directory), mirroring `~/.pi/agent/`. Not named `.pi/` on purpose: `.pi/` is pi's own project-config location, so pi running with this repo as cwd installed npm packages and cloned packages into it, regenerating **89M / 10,883 files** of runtime state (since deleted).
 - **Host:** Muzammil-Laptop
-- **Date (ISO):** 2026-10-19T01:37:58+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt by `restore.sh`)
+- **Date (ISO):** 2026-10-19T01:37:58+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
 - **pi version:** `1.3.0` (from `/home/muzammil/.pi/agent/install/releases/1.3.0/`; equals `install/current-version`)
 - **Purpose:** Version-control the hand-written, portable parts of the pi agent config (settings, extensions, prompt snippets, wrapper), excluding secrets, session data, caches and multi-hundred-MB re-installable/re-clonable trees.
 
-**Policy:** nothing with a git remote is vendored here — it is referenced by https URL + full SHA and rebuilt by restore.sh. Only files with no remote are copied.
+**Policy:** nothing with a git remote is vendored here — it is referenced by https URL + full SHA. Only files with no remote are copied.
 
 > History: commit `a4f79f4` added this backup as `dotfiles/.pi/`; it was later renamed to `dotfiles/pi/`, so `git log --follow` / `--find-renames` still shows the old `.pi/` path. Expected, not a second copy.
 
@@ -37,14 +37,13 @@ Copied with `cp -a` (mode + timestamps preserved); `skills/find-skills/` used `c
 | `extensions/prompt-snippets/snippets/worktree-orchestration.md` | 1015 | 0644 |
 | `skills/find-skills/` | 12K (1 file) | dir, **vendored** from `~/.agents/skills/find-skills` (`cp -aL`, real directory) |
 | `skills/find-skills/SKILL.md` | 5472 | 0664 |
-| `restore.sh` | 9383 | 0755 (executable) |
-| `MANIFEST.md` | 12343 | 0644 (this file; not copied by `restore.sh`) |
+| `MANIFEST.md` | — | 0644 (this file; not part of the restore) |
 
 Directories (implicitly): `bin/` 0755, `extensions/` 0755, `extensions/prompt-snippets/` 0775, `extensions/prompt-snippets/snippets/` 0775, `skills/` 0755, `skills/find-skills/` 0775.
 
-Total on disk: **160K, 21 files, zero symlinks** (`du -sh pi`; `find pi -type f | wc -l`).
+Total on disk: **148K, 20 files, zero symlinks** (`du -sh pi`; `find pi -type f | wc -l`; `find pi -type l | wc -l`).
 
-> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so `restore.sh` re-clones them and re-creates the `pi-tmux-status.ts` symlink. `skills/find-skills/` is the one exception: it is vendored as a real directory precisely because it has no remote anywhere.
+> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so the Restore steps clone them and re-create the `pi-tmux-status.ts` symlink. `skills/find-skills/` is the one exception: it is vendored as a real directory precisely because it has no remote anywhere.
 
 ## Excluded
 
@@ -66,11 +65,11 @@ Not copied; sizes are `du -sh` on the source.
 | `missions/` | 712K | session data |
 | `pi-subagents/` | 8.0K | generated state |
 | `skills/` (rest of the dir) | 4.0K | the only source entry was the `find-skills` symlink; that skill has **no remote**, so it is vendored under `skills/find-skills/` (real directory) |
-| `extensions/pi-interactive-subagents/` | 158M (524K without `node_modules/`) | **not vendored at all** — it has a remote (the user's fork), so `restore.sh` re-clones it from URL + pinned SHA |
+| `extensions/pi-interactive-subagents/` | 158M (524K without `node_modules/`) | **not vendored at all** — it has a remote (the user's fork), so step 7 of Restore clones it from URL + pinned SHA |
 
 Also measured on the source (none of it stored, being re-installable, re-clonable, generated, session data or secrets): `install/` **306M**, `npm/` **283M**, `sessions/` **332M**, `git/` **396M**, `pi-quotas/node_modules` **293M**, `pi-interactive-subagents/node_modules` **158M**, `models-store.json` (308K), `pi-crash.log` (3.2M), and the `mcp-*cache` / `usage-cache` / `backups/` / `missions/` / `pi-subagents/` / `run-history.jsonl` entries above.
 
-A fully-offline vendored copy of all 7 repos would be **~46M** (measured; excluding `.git/` and `node_modules/`). This backup **deliberately does not vendor them** — they are pinned by commit below and rebuilt by `restore.sh`.
+A fully-offline vendored copy of all 7 repos would be **~46M** (measured; excluding `.git/` and `node_modules/`). This backup **deliberately does not vendor them** — they are pinned by commit in the Clone table below and rebuilt from exactly those commits.
 
 ## Cloned repos to re-clone
 
@@ -106,45 +105,53 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 **No symlinks are stored** — `find pi -type l` returns nothing. The two symlinks on the source machine were resolved differently:
 
-- `extensions/pi-tmux-status.ts` was a symlink into the `pi-tmux-status` clone. It has a remote, so it is **not stored**; `restore.sh` re-creates it at `git/github.com/muzammil-iftikhar/pi-tmux-status/pi-tmux-status.ts`.
+- `extensions/pi-tmux-status.ts` was a symlink into the `pi-tmux-status` clone. It has a remote, so it is **not stored**; the Restore steps re-create it at `git/github.com/muzammil-iftikhar/pi-tmux-status/pi-tmux-status.ts`.
 - `skills/find-skills` was a symlink to `~/.agents/skills/find-skills`, **outside** pi. It has no remote (installed by `vercel-labs/skills` into `~/.agents`), which is exactly why it is vendored here as a real directory.
 
 ## Restore
 
-**Primary path — `restore.sh`.** From `/path/to/dotfiles/pi`, run `./restore.sh` (refuses to touch an existing `~/.pi/agent`) or `./restore.sh --force` to restore over one. The script (`0755`, `set -euo pipefail`) re-runs safely, reuses existing clones, and lists failures instead of aborting. It:
+Manual, numbered — there is no script. Run everything from the repo root; `pi/` below is this backup tree.
 
-1. refuses to run if `~/.pi/agent` exists unless `--force`;
-2. creates `~/.pi/agent/{bin,extensions,skills,git/github.com}`;
-3. copies `AGENTS.md settings.json models.json mcp.json trust.json bin/` (then `chmod 0755 bin/pi`);
-4. copies the **no-remote extensions only** (`ask-user-question.ts`, `quotas.json`, `prompt-snippets/`);
-5. installs `skills/find-skills/` as a **real directory** (not a symlink);
-6. clones the 7 repos above over **https** into their exact path column and checks out each **full SHA** (including the `pi-interactive-subagents` **fork**); it tries `git fetch --depth 1 origin <sha>` first and falls back to a full `git fetch` if the server refuses the unreferenced SHA;
-7. re-creates the `extensions/pi-tmux-status.ts` symlink into the clone (it is not vendored);
-8. runs `npm ci --no-audit --no-fund` in `git/github.com/latentminds-ai/pi-quotas` and `extensions/pi-interactive-subagents`;
-9. prints the remaining manual steps (re-authenticate, verify model settings, restart pi).
-
-`restore.sh` does **not** install pi — `bin/pi` is only a wrapper; the real install (`install/`, ~306M) is excluded. Install pi first.
-
-**Fallback — by hand.** Copy the config, extensions and skill, re-clone the 7 repos into their exact **path** column (pi-quotas's directory name differs from its origin URL; `pi-interactive-subagents` must come from the **fork**), check out each **full SHA**, re-create the tmux-status symlink, then install npm deps and re-authenticate:
-
-1. ```sh
-   mkdir -p ~/.pi/agent/{bin,extensions,skills}
-   cp -a pi/AGENTS.md pi/settings.json pi/models.json pi/mcp.json pi/trust.json ~/.pi/agent/
-   cp -a pi/bin/. ~/.pi/agent/bin/; chmod 0755 ~/.pi/agent/bin/pi
-   cp -a pi/extensions/. ~/.pi/agent/extensions/
-   cp -aL pi/skills/find-skills ~/.pi/agent/skills/find-skills     # real dir, never a symlink
+1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.3.0`**) so that `~/.pi/agent/install/` exists before anything else.
+2. **Create the tree:** `mkdir -p ~/.pi/agent/{bin,extensions,skills,git/github.com}`
+3. **Copy the five config files** into `~/.pi/agent/`:
+   `cp -a pi/AGENTS.md pi/settings.json pi/models.json pi/mcp.json pi/trust.json ~/.pi/agent/`
+4. **Copy the wrapper and make it executable:**
+   `cp -a pi/bin/pi ~/.pi/agent/bin/pi && chmod 0755 ~/.pi/agent/bin/pi`
+5. **Copy the no-remote extension files only** (nothing else in `extensions/` is vendored).
+   ```sh
+   cp -a pi/extensions/ask-user-question.ts pi/extensions/quotas.json ~/.pi/agent/extensions/
+   cp -a pi/extensions/prompt-snippets ~/.pi/agent/extensions/
    ```
-2. ```sh
-   mkdir -p ~/.pi/agent/git/github.com/{latentminds-ai,cathrynlavery,pasky,ayghri,muzammil-iftikhar,DietrichGebert}
-   git clone https://github.com/muzammil-iftikhar/pi-quotas ~/.pi/agent/git/github.com/latentminds-ai/pi-quotas
-   git -C ~/.pi/agent/git/github.com/latentminds-ai/pi-quotas checkout 61b35e74cf621b979936f016633eb2cded7f57c3
-   # … the other 6 rows exactly as in the table above …
+6. **Copy the skill as a REAL directory — never a symlink:**
+   `cp -aL pi/skills/find-skills ~/.pi/agent/skills/find-skills`
+   On the source machine this was a symlink to `~/.agents/skills/find-skills`, which is outside pi and is not backed up; the real files are vendored here.
+7. **Clone the 7 repos** into their exact path column. `cd ~/.pi/agent` first — the targets below are relative to that directory, not to the repo root:
+   ```sh
+   git clone <url> <target> && git -C <target> fetch --depth 1 origin <sha> && git -C <target> checkout --detach <sha>
    ```
-3. ```sh
+   If the `--depth 1` fetch of an unreferenced SHA is refused, run `git -C <target> fetch origin` first, then `git -C <target> checkout --detach <sha>`.
+
+   | `<target>` (relative to `~/.pi/agent`) | `<url>` | `<sha>` |
+   | --- | --- | --- |
+   | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `09c434ab73ca43761c5d8b0c5d341926c2fba710` |
+   | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
+   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `550fd66edff058bc73056c3416b76d69cfe865ba` |
+   | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `61b35e74cf621b979936f016633eb2cded7f57c3` |
+   | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
+   | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
+   | `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `4ea1194f50d8f36feccdc11f2aac760252750966` |
+
+   - `pi-quotas` **must** land in the `latentminds-ai/pi-quotas` directory: `settings.json` references that path, not one derived from its remote (`muzammil-iftikhar/pi-quotas`).
+   - `pi-interactive-subagents` **must** come from **https://github.com/muzammil-iftikhar/pi-interactive-subagents** — the user's fork. Upstream `amosblomqvist/…` does not contain the pinned commit `4ea1194`.
+   - Two of these are **private** (`pi-quotas`, `pi-tmux-status`), so the https clones need credentials with access.
+8. **Re-create the one symlink, after step 7** (it is not vendored):
+   ```sh
    ln -sfn ~/.pi/agent/git/github.com/muzammil-iftikhar/pi-tmux-status/pi-tmux-status.ts \
            ~/.pi/agent/extensions/pi-tmux-status.ts
    ```
-4. `npm ci --no-audit --no-fund` in `~/.pi/agent/git/github.com/latentminds-ai/pi-quotas` and `~/.pi/agent/extensions/pi-interactive-subagents`.
-5. **Re-authenticate — do NOT copy credentials from git.** `auth.json`/`mcp-auth.json` are secrets, not backed up. Run the provider login flow, verify `defaultProvider`/`defaultModel` in `~/.pi/agent/settings.json`, then restart pi.
-
-> `mcp.json` was copied with an inline `context7` API key; that value has since been blanked here. Supply it at run time or restore it from your own credentials.
+   Verify the target exists first — otherwise the extension silently will not load.
+9. **Install npm deps** (`npm ci --no-audit --no-fund`) in exactly two trees, both of which ship a `package-lock.json`:
+   - `~/.pi/agent/git/github.com/latentminds-ai/pi-quotas`
+   - `~/.pi/agent/extensions/pi-interactive-subagents`
+10. **Manual steps afterwards.** `auth.json` / `mcp-auth.json` are **secrets and deliberately never stored** — authenticate providers with the login flow. If you use the context7 MCP server, supply its API key (it was blanked in `mcp.json`). Verify `defaultProvider` / `defaultModel` in `settings.json`. Then restart pi.
