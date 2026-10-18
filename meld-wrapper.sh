@@ -14,7 +14,7 @@ if [[ "$#" -eq 2 ]]; then
   LOCAL_WIN=$(to_win_path "$1")
   REMOTE_WIN=$(to_win_path "$2")
 
-  powershell.exe -Command "Start-Process -Wait 'C:\\Users\\YOUR_WINDOWS_USERNAME\\scoop\\shims\\meld.exe' -ArgumentList '${LOCAL_WIN}', '${REMOTE_WIN}'"
+  powershell.exe -Command "Start-Process -Wait 'C:\\Users\\Muzammil Iftikhar\\scoop\\shims\\meld.exe' -ArgumentList '${LOCAL_WIN}', '${REMOTE_WIN}'"
 elif [[ "$#" -eq 4 ]]; then
   # Mergetool mode: LOCAL, REMOTE, BASE, MERGED
   LOCAL_WIN=$(to_win_path "$1")
@@ -22,7 +22,7 @@ elif [[ "$#" -eq 4 ]]; then
   BASE_WIN=$(to_win_path "$3")
   MERGED_WIN=$(to_win_path "$4")
 
-  powershell.exe -Command "Start-Process -Wait 'C:\\Users\\YOUR_WINDOWS_USERNAME\\scoop\\shims\\meld.exe' -ArgumentList '${LOCAL_WIN}', '${REMOTE_WIN}', '${BASE_WIN}', '${MERGED_WIN}'"
+  powershell.exe -Command "Start-Process -Wait 'C:\\Users\\Muzammil Iftikhar\\scoop\\shims\\meld.exe' -ArgumentList '${LOCAL_WIN}', '${REMOTE_WIN}', '${BASE_WIN}', '${MERGED_WIN}'"
 else
   echo "Unsupported number of arguments: $#" >&2
   exit 1

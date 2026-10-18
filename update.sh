@@ -34,4 +34,9 @@ echo "=== Updating Claude Code ==="
 claude update
 
 echo ""
+echo "=== Updating Pi ==="
+pi update
+pi update --extensions
+
+echo ""
 echo "=== All done! ==="
