@@ -1,0 +1,3 @@
+# pi's project-config dir. Anything pi runs in this repo would populate it with
+# git/ + npm/ runtime state (89M last time). The real backup lives in pi/.
+.pi/

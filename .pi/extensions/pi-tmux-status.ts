@@ -1,1 +1,0 @@
-/home/muzammil/.pi/agent/git/github.com/muzammil-iftikhar/pi-tmux-status/pi-tmux-status.ts
