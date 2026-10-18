@@ -1,0 +1,27 @@
+{
+  "lastChangelogVersion": "1.3.0",
+  "theme": "dark",
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4.1-flash",
+  "enabledModels": [],
+  "packages": [
+    "npm:pi-web-access",
+    "git:github.com/pasky/chrome-cdp-skill@v1.0.1",
+    "git:github.com/DietrichGebert/ponytail",
+    "git/github.com/latentminds-ai/pi-quotas",
+    "npm:pi-observational-memory",
+    "npm:@plannotator/pi-extension",
+    "https://github.com/ayghri/i-have-adhd",
+    "https://github.com/cathrynlavery/diagram-design"
+  ],
+  "defaultThinkingLevel": "medium",
+  "observational-memory": {
+    "compactAfterTokens": 81000,
+    "compactAfterTokensMode": "ratio",
+    "compactAfterTokensRatio": 0.5
+  },
+  "extensions": [
+    "+builtin:mcp"
+  ],
+  "tuiMode": "fullscreen"
+}
