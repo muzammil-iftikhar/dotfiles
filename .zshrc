@@ -50,6 +50,12 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
+
+# Open buffer line in nvim
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
 # --------------------------------------------------Env Variables Start--------------------------------------------------
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -71,20 +77,21 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 
 # Ai env variables
-export OPENROUTER_API_KEY="YOUR_OPENROUTER_API_KEY"
-export OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
-export OLLAMA_API_KEY="YOUR_OLLAMA_API_KEY"
+export OPENROUTER_API_KEY=""
+export OPENAI_API_KEY=""
+export OLLAMA_API_KEY=Ollama
 # export ANTHROPIC_API_KEY=""
 export MAX_MCP_OUTPUT_TOKENS=50000 # This is for the claude code cli
-export GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-export CHUTES_OPENAI_API_KEY="YOUR_CHUTES_OPENAI_API_KEY"
-export MINIMAX_API_KEY="YOUR_MINIMAX_API_KEY"
+export GEMINI_API_KEY=""
+export CHUTES_OPENAI_API_KEY=""
+export MINIMAX_API_KEY=""
 
 # Vagrant wsl env variables
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/YOUR_WINDOWS_USERNAME/Desktop/virtual machines"
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
 
 # --------------------------------------------------Env Variables End--------------------------------------------------
+
 
 # --------------------------------------------------Alias Start--------------------------------------------------
 if command -v exa >/dev/null; then
@@ -110,7 +117,7 @@ eval "$(starship init zsh)"
 # bun completions
 [ -s "/home/muzammil/.bun/_bun" ] && source "/home/muzammil/.bun/_bun"
 
-# Build PATH
+# -------------------------------------------------- Build PATH --------------------------------------------------
 pathadd() {
   case ":$PATH:" in
     *":$1:"*) ;; # already exists
@@ -133,5 +140,12 @@ pathadd "$BUN_INSTALL/bin"
 # JAVA_HOME
 export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 pathadd "$JAVA_HOME/bin"
+# -------------------------------------------------- Build PATH END ------------------------------------------------
 
 alias claude-mem='/home/muzammil/.bun/bin/bun "/home/muzammil/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+#-------------------------------------------------- Nvm Init--------------------------------------------------  
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#-------------------------------------------------- Nvm Init End--------------------------------------------------  
