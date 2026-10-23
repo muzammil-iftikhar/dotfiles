@@ -3,8 +3,8 @@
 - **Source dir:** `~/.pi/agent` (`/home/muzammil/.pi/agent`)
 - **Location:** `dotfiles/pi/` (this directory), mirroring `~/.pi/agent/`. Not named `.pi/` on purpose: `.pi/` is pi's own project-config location, so pi running with this repo as cwd installed npm packages and cloned packages into it, regenerating **89M / 10,883 files** of runtime state (since deleted).
 - **Host:** Muzammil-Laptop
-- **Date (ISO):** 2026-10-19T01:37:58+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
-- **pi version:** `1.3.0` (from `/home/muzammil/.pi/agent/install/releases/1.3.0/`; equals `install/current-version`)
+- **Date (ISO):** 2026-10-24T03:07:23+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
+- **pi version:** `1.4.0` (from `/home/muzammil/.pi/agent/install/releases/1.4.0/`; equals `install/current-version`; `settings.json` has `lastChangelogVersion: 1.4.0`)
 - **Purpose:** Version-control the hand-written, portable parts of the pi agent config (settings, extensions, prompt snippets, wrapper), excluding secrets, session data, caches and multi-hundred-MB re-installable/re-clonable trees.
 
 **Policy:** nothing with a git remote is vendored here — it is referenced by https URL + full SHA. Only files with no remote are copied.
@@ -18,10 +18,10 @@ Copied with `cp -a` (mode + timestamps preserved); `skills/find-skills/` used `c
 | Path (relative to `pi/`) | Bytes | Mode |
 | --- | ---: | --- |
 | `AGENTS.md` | 4061 | 0664 |
-| `settings.json` | 763 | 0664 |
+| `settings.json` | 790 | 0664 |
 | `models.json` | 296 | 0664 |
 | `mcp.json` | 269 | 0644 |
-| `trust.json` | 157 | 0664 |
+| `trust.json` | 201 | 0664 |
 | `bin/pi` | 1467 | 0755 (executable) |
 | `extensions/ask-user-question.ts` | 20411 | 0664 |
 | `extensions/quotas.json` | 134 | 0664 |
@@ -79,7 +79,7 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 | --- | --- | --- |
 | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `09c434ab73ca43761c5d8b0c5d341926c2fba710` |
 | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
-| `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `550fd66edff058bc73056c3416b76d69cfe865ba` |
+| `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `7a12007b5a4246894f342a2e52e78facbc62eca3` |
 | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `61b35e74cf621b979936f016633eb2cded7f57c3` |
 | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
 | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
@@ -112,7 +112,7 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 Manual, numbered — there is no script. Run everything from the repo root; `pi/` below is this backup tree.
 
-1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.3.0`**) so that `~/.pi/agent/install/` exists before anything else.
+1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.4.0`**) so that `~/.pi/agent/install/` exists before anything else.
 2. **Create the tree:** `mkdir -p ~/.pi/agent/{bin,extensions,skills,git/github.com}`
 3. **Copy the five config files** into `~/.pi/agent/`:
    `cp -a pi/AGENTS.md pi/settings.json pi/models.json pi/mcp.json pi/trust.json ~/.pi/agent/`
@@ -136,7 +136,7 @@ Manual, numbered — there is no script. Run everything from the repo root; `pi/
    | --- | --- | --- |
    | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `09c434ab73ca43761c5d8b0c5d341926c2fba710` |
    | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
-   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `550fd66edff058bc73056c3416b76d69cfe865ba` |
+   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `7a12007b5a4246894f342a2e52e78facbc62eca3` |
    | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `61b35e74cf621b979936f016633eb2cded7f57c3` |
    | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
    | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
