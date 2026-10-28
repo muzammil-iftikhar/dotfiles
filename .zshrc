@@ -1,35 +1,12 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-if [ -z "$TMUX" ]; then
-  # Check if 'syncthing' session exists
-  if ! tmux has-session -t syncthing 2>/dev/null; then
-    # Create session and run command inside it
-    tmux new-session -d -s syncthing -n syncthing "syncthing.exe serve --no-browser"
-  else
-    # Run command in existing session without attaching
-    tmux send-keys -t syncthing "syncthing.exe serve --no-browser" C-m
-  fi
-
-  # Check if 'default' session exists
-  if ! tmux has-session -t default 2>/dev/null; then
-    # Create and attach to 'default' session
-    tmux new-session -s default
-  else
-    # Attach to existing 'default' session
-    tmux attach-session -t default
-  fi
-fi
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="sorin" # set by `omz`
+ZSH_THEME="" # set by `omz`
 # Available themes
 # powerlevel10k/powerlevel10k
 # robbyrussell
 # gozilla
+# sorin
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -51,13 +28,12 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Open buffer line in nvim
+# Open buffer line in nvim by pressing ctrl+x ctrl+e
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 # --------------------------------------------------Env Variables Start--------------------------------------------------
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FZF_BASE="$HOME/.fzf"
 export ZSHZ_UNCOMMON=1
@@ -90,6 +66,10 @@ export MINIMAX_API_KEY=""
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
 
+# for viafone project
+export KUBECONFIG="$HOME/.kube/agentos-dev"
+export AZURE_CORE_COLLECT_TELEMETRY=false
+
 # --------------------------------------------------Env Variables End--------------------------------------------------
 
 
@@ -101,6 +81,7 @@ else
 fi
 
 alias nv='nvim'
+alias ke='kubectl --kubeconfig=/mnt/c/Users/muzam/Desktop/viafone/etihadWe/.kube/aks-ewe-agentos-prod-01-admin-tunnel'
 # --------------------------------------------------Alias End--------------------------------------------------
 
 # Enable terraform autocompletion
@@ -132,6 +113,7 @@ pathadd "$HOME/.rbenv/bin"
 pathadd "$HOME/.npm-global/bin"
 pathadd "/snap/bin"
 pathadd "/mnt/c/Users/muzam/scoop/shims"
+pathadd "/mnt/c/Users/muzam/scoop/apps/vscode/current/bin"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -147,5 +129,10 @@ alias claude-mem='/home/muzammil/.bun/bin/bun "/home/muzammil/.claude/plugins/ma
 #-------------------------------------------------- Nvm Init--------------------------------------------------  
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #-------------------------------------------------- Nvm Init End--------------------------------------------------  
+
+#-------------------------------------------------- Tmux--------------------------------------------------  
+if [[ -z "$TMUX" ]]; then
+  tmux new-session -A -s default
+fi
+#-------------------------------------------------- Tmux End--------------------------------------------------  

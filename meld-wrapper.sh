@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "=== meld-wrapper.sh called ===" >>/tmp/meld-debug.log
+echo "ARGS: $@" >>/tmp/meld-debug.log
+date >>/tmp/meld-debug.log
+
 # Convert WSL paths to Windows paths
 to_win_path() {
   wslpath -w "$1"
