@@ -66,8 +66,7 @@ export MINIMAX_API_KEY=""
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Muzammil Iftikhar/Desktop/virtual machines"
 
-# for viafone project
-export KUBECONFIG="$HOME/.kube/agentos-dev"
+# kubectl uses the default ~/.kube/config (dev-aks + etihadwe-aks contexts)
 export AZURE_CORE_COLLECT_TELEMETRY=false
 
 # --------------------------------------------------Env Variables End--------------------------------------------------
