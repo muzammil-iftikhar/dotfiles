@@ -18,6 +18,7 @@ This directory is a plain collection of config files — **not** managed via sym
 | `wezterm.lua`     | WezTerm config — default domain `WSL:Ubuntu-22.04`, Dracula+ scheme, DankMono Nerd Font                                |
 | `kitty.conf`      | Minimal kitty config — FiraCode Nerd Font, includes `theme.conf` (not committed)                                       |
 | `alacritty.toml`  | Alacritty config (TOML format)                                                                                         |
+| `starship.toml`   | Starship prompt (icon style, ~9 ms/render); installed as `~/.config/starship/starship.toml`                             |
 | `wsl.conf`        | WSL: `network.generateResolvConf=false`, `boot.systemd=true`                                                           |
 | `.wslgconfig`     | WSLg: `WESTON_RDP_MONITOR_REFRESH_RATE=120`                                                                            |
 | `hypr/`           | Hyprland Wayland compositor config (split across files, `source =` includes)                                           |
@@ -78,10 +79,11 @@ cp "$DOTFILES/meld-wrapper.sh"  ~/meld-wrapper.sh
 chmod +x ~/exa-wrapper.sh ~/meld-wrapper.sh
 
 # Editors / terminals (XDG config home)
-mkdir -p ~/.config/nvim ~/.config/kitty ~/.config/alacritty ~/.config/hypr
+mkdir -p ~/.config/nvim ~/.config/kitty ~/.config/alacritty ~/.config/hypr ~/.config/starship
 cp    "$DOTFILES/nvim"/*            ~/.config/nvim/
 cp    "$DOTFILES/kitty.conf"        ~/.config/kitty/kitty.conf
 cp    "$DOTFILES/alacritty.toml"    ~/.config/alacritty/alacritty.toml
+cp    "$DOTFILES/starship.toml"     ~/.config/starship/starship.toml
 cp -r "$DOTFILES/hypr"/*            ~/.config/hypr/
 ```
 

@@ -81,7 +81,6 @@ else
 fi
 
 alias nv='nvim'
-alias ke='kubectl --kubeconfig=/mnt/c/Users/muzam/Desktop/viafone/etihadWe/.kube/aks-ewe-agentos-prod-01-admin-tunnel'
 # --------------------------------------------------Alias End--------------------------------------------------
 
 # Enable terraform autocompletion
@@ -94,6 +93,10 @@ eval "$(rbenv init - zsh)"
 # For starship prompt
 export STARSHIP_CONFIG=/home/muzammil/.config/starship/starship.toml
 eval "$(starship init zsh)"
+
+# starship: show kubernetes context/namespace only while you need it
+k8son() { export STARSHIP_K8S=1; }
+k8soff() { unset STARSHIP_K8S; }
 
 # bun completions
 [ -s "/home/muzammil/.bun/_bun" ] && source "/home/muzammil/.bun/_bun"

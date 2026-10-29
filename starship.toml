@@ -1,0 +1,103 @@
+
+"$schema" = 'https://starship.rs/config-schema.json'
+scan_timeout = 10
+command_timeout = 400
+add_newline = false
+
+format = "$directory$git_branch$git_status$kubernetes$python$nodejs$golang$rust$terraform$docker_context$package$status$cmd_duration\n$character"
+right_format = "$time"
+
+[character]
+success_symbol = "[\u276f](bold green)"
+error_symbol = "[\uf467](bold red)"
+vimcmd_symbol = "[\u276f](bold green)"
+
+[directory]
+format = "[\uf07b $path]($style) "
+style = "bold blue"
+truncation_length = 0
+truncate_to_repo = false
+repo_root_style = "bold cyan"
+read_only = " \uf023"
+
+[git_branch]
+symbol = "\uf418 "
+format = "[$symbol$branch]($style) "
+style = "bold purple"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold red"
+untracked = "?"
+ahead = "\u2191"
+behind = "\u2193"
+diverged = "\u2195"
+modified = "!"
+staged = "+"
+deleted = "\u2718"
+renamed = "r"
+
+[python]
+symbol = "\ue606 "
+format = "[$symbol$version]($style) "
+style = "bold yellow"
+[nodejs]
+symbol = "\ue718 "
+format = "[$symbol$version]($style) "
+style = "bold green"
+[golang]
+symbol = "\ue627 "
+format = "[$symbol$version]($style) "
+style = "bold cyan"
+[rust]
+symbol = "\ue7a8 "
+format = "[$symbol$version]($style) "
+style = "bold red"
+[terraform]
+symbol = "\uf0ad "
+format = "[$symbol$workspace]($style) "
+style = "bold magenta"
+[docker_context]
+symbol = "\uf308 "
+format = "[$symbol$context]($style) "
+style = "bold blue"
+[package]
+symbol = "\U000f03d7 "
+format = "[$symbol$version]($style) "
+style = "bold 208"
+
+[cmd_duration]
+min_time = 500
+format = "[$duration]($style) "
+style = "bold yellow"
+
+[time]
+time_format = "%H:%M"
+format = "[$time]($style) "
+style = "bright-black"
+
+[jobs]
+symbol = "\u26a1"
+
+[status]
+symbol = "[\uf467](bold red) "
+disabled = false
+
+[kubernetes]
+disabled = false
+detect_env_vars = ["STARSHIP_K8S"]
+symbol = "\u2638 "
+format = '[$symbol$context(::$namespace)]($style) '
+style = "bold cyan"
+
+[lua]
+disabled = true
+
+[aws]
+disabled = true
+
+[azure]
+disabled = true
+
+[gcloud]
+disabled = true
