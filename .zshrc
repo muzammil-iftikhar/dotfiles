@@ -56,8 +56,6 @@ export TMUX_NAVIGATOR_SAVE_ON_SWITCH=2
 export OPENROUTER_API_KEY=""
 export OPENAI_API_KEY=""
 export OLLAMA_API_KEY=Ollama
-# export ANTHROPIC_API_KEY=""
-export MAX_MCP_OUTPUT_TOKENS=50000 # This is for the claude code cli
 export GEMINI_API_KEY=""
 export CHUTES_OPENAI_API_KEY=""
 export MINIMAX_API_KEY=""
@@ -126,7 +124,6 @@ export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 pathadd "$JAVA_HOME/bin"
 # -------------------------------------------------- Build PATH END ------------------------------------------------
 
-alias claude-mem='/home/muzammil/.bun/bin/bun "/home/muzammil/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 
 #-------------------------------------------------- Nvm Init--------------------------------------------------  
 export NVM_DIR="$HOME/.config/nvm"
