@@ -1,7 +1,11 @@
 
 "$schema" = 'https://starship.rs/config-schema.json'
-scan_timeout = 30
+# scan_timeout is a ceiling, not a delay: raising it costs nothing when the
+# scan is fast, and only buys time when the filesystem genuinely stalls.
+scan_timeout = 100
 command_timeout = 400
+# ~/.aws and ~/.docker point into /mnt/c; following them drags the scan onto 9p
+follow_symlinks = false
 add_newline = false
 
 format = "$directory$git_branch$git_status$kubernetes$python$nodejs$golang$rust$terraform$docker_context$package$status$cmd_duration\n$character"
