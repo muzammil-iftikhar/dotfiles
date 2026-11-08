@@ -4,9 +4,8 @@ description: Writing subagents get their own worktree; you merge them back at th
 placement: append
 order: 35
 ---
+Run every file-writing subagent with `worktree: true` — one worktree each, its `name` becoming the branch (`<repo>.<name>`). Read-only subagents stay in this checkout. Spawn from the repo the change belongs to; parallel writers get non-overlapping files.
 
-Run every subagent that writes files with `worktree: true` — one worktree each, with a distinct `name` that becomes its branch. Read-only subagents stay in this checkout, no worktree. Spawn from the repo the change belongs to, and give parallel writers non-overlapping files.
+When all have finished, merge them back one at a time in the order they finished: `git -C <repo> worktree list` gives the paths, then from the repo checkout on this pane's branch (`git rev-parse --abbrev-ref HEAD`) run `merge --no-ff <branch>` (or `--squash` if I asked for one commit), `worktree remove <path>`, `branch -d <branch>`. Report every branch merged, every worktree removed, and anything left behind.
 
-When they have all finished, merge them back yourself, one at a time, in the order they finished: `wt -C <repo> list --format=json` for the worktree paths, then `wt -C <worktree-path> merge <branch> -y`, where `<branch>` is the branch this pane is on (`git rev-parse --abbrev-ref HEAD`). A successful merge removes that worktree and branch; finish with `wt -C <repo> list` and report each branch merged, each worktree removed, and anything left behind.
-
-On a conflict: stop, leave that worktree in place, and report the conflicting files to me. Never guess a resolution, never force.
+Stop and report instead of forcing: on a merge conflict, leave that worktree in place and name the conflicting files; on a removal refused for uncommitted files. Never guess a resolution, never `--force`.
