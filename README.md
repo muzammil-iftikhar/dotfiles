@@ -61,7 +61,7 @@ does not exist yet. Preview without writing: `chezmoi apply --dry-run -v`, or `c
 | `symlink_dot_tmux.conf` | `~/.tmux.conf` | symlink → `.config/tmux/tmux.conf` (relative, resolves to `~/.config/tmux/tmux.conf`) |
 | `dot_config/starship/starship.toml` | `~/.config/starship/starship.toml` | icon prompt, WSL tuning |
 | `dot_config/systemd/user/openviking.service` | `~/.config/systemd/user/` | user unit, no sudo |
-| `dot_pi/private_agent/` | `~/.pi/agent/` | pi config + extensions; dir stays `0700` |
+| `dot_pi/private_agent/` | `~/.pi/agent/` | pi config + extensions; dir `0700`, `mcp.json` `0600` |
 | `private_dot_openviking/` | `~/.openviking/` | dir 0700; secrets are `create_private_` files |
 | `executable_exa-wrapper.sh` | `~/exa-wrapper.sh` | `ls` shim over `exa` |
 | `executable_meld-wrapper.sh` | `~/meld-wrapper.sh` | meld bridge to Windows |
@@ -81,7 +81,7 @@ carries them with the keys blanked:
 | --- | --- | --- |
 | `~/.openviking/ov.conf` | 0600 | `server.root_api_key`, `vlm.api_key` (VLM provider) |
 | `~/.openviking/ovcli.conf` | 0600 | `api_key`, `root_api_key` |
-| `~/.pi/agent/mcp.json` | 0644 | context7 MCP server's `--api-key` |
+| `~/.pi/agent/mcp.json` | 0600 | context7 MCP server's `--api-key` |
 
 On a fresh machine those files are created blank; fill them once. Fill in the
 `.zshrc` key exports (`OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`,
@@ -98,7 +98,8 @@ chezmoi update            # git pull + apply
 chezmoi cd                # shell in the source dir, then git commit/push
 ```
 
-`chezmoi status` being silent means the repo and this machine are identical.
+`chezmoi status` being silent means the repo and this machine are identical; `chezmoi verify`
+exits non-zero if anything differs, and `chezmoi doctor` checks the setup itself.
 
 ## `extras/` — not managed
 
