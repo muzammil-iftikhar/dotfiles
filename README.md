@@ -11,7 +11,7 @@ This directory is a plain collection of config files — **not** managed via sym
 | `.zshrc`          | Primary shell config — the hub that ties everything together                                                           |
 | `.gitconfig`      | Git identity (real name/email + Windows paths), delta diff pager, meld difftool/mergetool (bridged to Windows), aliases |
 | `tmux.conf`       | Tmux configuration (status line, keybindings, mouse); live copy is `~/.config/tmux/tmux.conf`, with `~/.tmux.conf` symlinked to it |
-| `update.sh`       | System maintenance: apt, snap, rustup, cargo, npm, claude, pi                                                          |
+| `update.sh`       | System maintenance: apt, snap, rustup, cargo, npm, pi                                                                  |
 | `exa-wrapper.sh`  | Wrapper translating `ls` flags to `exa` flags; aliased to `ls` only when `exa` is installed (legacy — see below)       |
 | `meld-wrapper.sh` | Bridges git diff/merge tool `meld` to Windows `meld.exe` via `wslpath` + `powershell.exe` (Windows paths hardcoded)    |
 | `wezterm.lua`     | WezTerm config — default domain `WSL:Ubuntu-22.04`, Dracula+ scheme, DankMono Nerd Font                                |

@@ -30,10 +30,6 @@ echo "=== Clearing npm Cache ==="
 npm cache clean --force
 
 echo ""
-echo "=== Updating Claude Code ==="
-claude update
-
-echo ""
 echo "=== Updating Pi ==="
 pi update
 pi update --extensions
