@@ -1,5 +1,0 @@
-# Vendored copy of the find-skills skill. On this machine ~/.pi/agent/skills/find-skills
-# is a symlink into ~/.agents/skills (installed by vercel-labs/skills), so chezmoi must
-# not replace it. The real files stay in the repo as the only backup of that skill.
-dot_pi/agent/skills/find-skills
-home/dot_pi/agent/skills/find-skills

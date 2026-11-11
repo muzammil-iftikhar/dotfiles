@@ -1,7 +1,7 @@
 # pi agent config backup — MANIFEST
 
 - **Source dir:** `~/.pi/agent` (`/home/muzammil/.pi/agent`)
-- **Location:** `dotfiles/home/dot_pi/agent/` in the chezmoi source state, mirroring `~/.pi/agent/`. Every entry is applied with `chezmoi apply ~/.pi/agent`; chezmoi's `dot_` prefix encodes the leading dot, so `dot_pi/agent` is `~/.pi/agent`.
+- **Location:** `dotfiles/home/dot_pi/private_agent/` in the chezmoi source state, mirroring `~/.pi/agent/`. Every entry is applied with `chezmoi apply ~/.pi/agent`; chezmoi's `dot_`/`private_` prefixes encode the leading dot and the `0700` mode, so `dot_pi/private_agent` is `~/.pi/agent`.
 - **Host:** Muzammil-Laptop
 - **Date (ISO):** 2026-11-11T22:27:48+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
 - **pi version:** `1.5.2` (from `/home/muzammil/.pi/agent/install/releases/1.5.2/`; equals `install/current-version`; `settings.json` has `lastChangelogVersion: 1.5.2`)
@@ -15,7 +15,7 @@
 
 Tracked by chezmoi (contents copied from `~/.pi/agent`); `skills/find-skills/` used `cp -aL` (dereferencing the symlink it was on the source machine). Bytes are as copied.
 
-| Path (relative to `home/dot_pi/agent/`) | Bytes | Mode |
+| Path (relative to `home/dot_pi/private_agent/`) | Bytes | Mode |
 | --- | ---: | --- |
 | `AGENTS.md` | 5708 | 0664 |
 | `settings.json` | 958 | 0664 |
@@ -35,8 +35,8 @@ Tracked by chezmoi (contents copied from `~/.pi/agent`); `skills/find-skills/` u
 | `extensions/prompt-snippets/snippets/session-kickoff.md` | 280 | 0664 |
 | `extensions/prompt-snippets/snippets/verify-not-assume.md` | 343 | 0664 |
 | `extensions/prompt-snippets/snippets/worktree-orchestration.md` | 1028 | 0644 |
-| `skills/find-skills/` | 12K (1 file) | dir, **vendored** from `~/.agents/skills/find-skills` (`cp -aL`, real directory) |
-| `skills/find-skills/SKILL.md` | 5472 | 0664 |
+| *(not stored here)* `skills/find-skills/` | 12K (1 file) | **moved to `extras/find-skills/`** — chezmoi must not own a path that is a symlink into `~/.agents` |
+
 | `extensions/openviking/` | 896K (78 files) | dir, **vendored** — hand-written extension with **no git remote**; `node_modules/` excluded (see Excluded) |
 | `MANIFEST.md` | — | 0644 (this file; not part of the restore) |
 
@@ -46,7 +46,7 @@ Directories (implicitly): `bin/` 0755, `extensions/` 0755, `extensions/prompt-sn
 
 Total on disk: **1.1M, 98 files, zero symlinks** (`du -sh pi`; `find pi -type f | wc -l`; `find pi -type l | wc -l`).
 
-> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so the Restore steps clone them and re-create the `pi-tmux-status.ts` symlink. Two entries are the exception, vendored as real files because they have no remote anywhere: `skills/find-skills/` and `extensions/openviking/`.
+> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so the Restore steps clone them and re-create the `pi-tmux-status.ts` symlink. One entry is the exception, vendored as real files because it has no remote anywhere: `extensions/openviking/`. The `find-skills` skill is kept in the repo's `extras/` instead (see Restore).
 
 ## Excluded
 
@@ -114,7 +114,7 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 ## Restore
 
-**Managed by chezmoi** — there is no manual copy step any more. These files are the `home/dot_pi/agent/` source state, so any machine with the repo gets them with one command:
+**Managed by chezmoi** — there is no manual copy step any more. These files are the `home/dot_pi/private_agent/` source state, so any machine with the repo gets them with one command:
 
 ```sh
 chezmoi apply ~/.pi/agent     # pi only
@@ -132,4 +132,8 @@ chezmoi apply                 # everything
 5. **Install npm deps** in the three trees that ship a `package-lock.json`: `extensions/openviking` (`node_modules` is excluded from the repo), `git/github.com/latentminds-ai/pi-quotas`, `extensions/pi-interactive-subagents`. `run_onchange_after_pi-node-deps.sh` in the source state does this automatically on `chezmoi apply` for whichever of the three exist.
 6. **Authenticate and fill secrets.** `auth.json` / `mcp-auth.json` are secrets and never stored — log in with the provider flows. Fill the blanked context7 `--api-key` in `~/.pi/agent/mcp.json`. Then restart pi.
 
-`skills/find-skills/` is vendored in the source state but listed in `.chezmoiignore`: on this machine `~/.pi/agent/skills/find-skills` is a symlink into `~/.agents/skills` (installed by `vercel-labs/skills`), so chezmoi must not replace it. On a machine without that symlink, copy the directory in by hand.
+`skills/find-skills` is **not** managed by chezmoi: on this machine `~/.pi/agent/skills/find-skills` is a symlink into `~/.agents/skills` (installed by `vercel-labs/skills`), and a managed copy would replace that symlink with a real directory. The skill's only backup is `extras/find-skills/SKILL.md`. On a machine without the symlink, copy it in by hand:
+
+```sh
+mkdir -p ~/.pi/agent/skills && cp -r extras/find-skills ~/.pi/agent/skills/
+```

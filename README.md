@@ -8,7 +8,6 @@ on its own.
 ```
 dotfiles/                  <- this repo, also the chezmoi source directory
 ├── .chezmoiroot           -> "home": chezmoi only looks inside home/
-├── .chezmoiignore         -> vendored files that must not be applied
 ├── home/                  <- the source state (target paths encoded in names)
 ├── extras/                <- NOT managed by chezmoi (see below)
 ├── docs/pi-agent.md       <- pi agent restore notes + clone SHAs
@@ -62,7 +61,7 @@ does not exist yet. Preview without writing: `chezmoi apply --dry-run -v`, or `c
 | `symlink_dot_tmux.conf` | `~/.tmux.conf` | symlink → `.config/tmux/tmux.conf` (relative, resolves to `~/.config/tmux/tmux.conf`) |
 | `dot_config/starship/starship.toml` | `~/.config/starship/starship.toml` | icon prompt, WSL tuning |
 | `dot_config/systemd/user/openviking.service` | `~/.config/systemd/user/` | user unit, no sudo |
-| `dot_pi/agent/` | `~/.pi/agent/` | pi config, extensions, vendored skill |
+| `dot_pi/private_agent/` | `~/.pi/agent/` | pi config + extensions; dir stays `0700` |
 | `private_dot_openviking/` | `~/.openviking/` | dir 0700; secrets are `create_private_` files |
 | `executable_exa-wrapper.sh` | `~/exa-wrapper.sh` | `ls` shim over `exa` |
 | `executable_meld-wrapper.sh` | `~/meld-wrapper.sh` | meld bridge to Windows |
@@ -112,6 +111,7 @@ Kept in the repo for reference, never applied by chezmoi:
 | `wezterm.lua` | `C:\Users\<you>\.config\wezterm\wezterm.lua` |
 | `alacritty.toml` | Windows-host Alacritty config |
 | `kitty.conf` | Linux-side kitty (kitty not installed here) |
+| `find-skills/` | vendored copy of the `find-skills` skill; `~/.pi/agent/skills/find-skills` is a symlink into `~/.agents/skills`, so chezmoi must not own it |
 | `wsl.conf` | `/etc/wsl.conf` — needs root, so not managed |
 
 After changing `.wslconfig` / `.wsl.conf`, run `wsl --shutdown` from Windows.
