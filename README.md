@@ -39,16 +39,17 @@ Every target can be applied alone. Nothing else is touched.
 
 | Want | Command |
 | --- | --- |
-| Shell + prompt | `chezmoi apply ~/.zshrc ~/.config/starship/starship.toml` |
-| Git | `chezmoi apply ~/.gitconfig` |
-| tmux | `chezmoi apply ~/.config/tmux/tmux.conf ~/.tmux.conf` |
-| Neovim | `chezmoi apply ~/.config/nvim` |
-| pi coding agent | `chezmoi apply ~/.pi/agent` |
-| OpenViking | `chezmoi apply ~/.openviking ~/.config/systemd/user/openviking.service` |
-| Wrappers | `chezmoi apply ~/exa-wrapper.sh ~/meld-wrapper.sh` |
+| Shell + prompt | `chezmoi apply -P ~/.zshrc ~/.config/starship/starship.toml` |
+| Git | `chezmoi apply -P ~/.gitconfig` |
+| tmux | `chezmoi apply -P ~/.config/tmux/tmux.conf ~/.tmux.conf` |
+| Neovim | `chezmoi apply -P ~/.config/nvim` |
+| pi coding agent | `chezmoi apply -P ~/.pi/agent` |
+| OpenViking | `chezmoi apply -P ~/.openviking ~/.config/systemd/user/openviking.service` |
+| Wrappers | `chezmoi apply -P ~/exa-wrapper.sh ~/meld-wrapper.sh` |
 | Everything | `chezmoi apply` |
 
-Preview without writing: `chezmoi apply --dry-run -v`, or `chezmoi diff`.
+`-P` creates missing parent directories, so these work on a machine where `~/.config`
+does not exist yet. Preview without writing: `chezmoi apply --dry-run -v`, or `chezmoi diff`.
 
 ## What lives where
 
