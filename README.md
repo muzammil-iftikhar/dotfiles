@@ -59,7 +59,7 @@ does not exist yet. Preview without writing: `chezmoi apply --dry-run -v`, or `c
 | `dot_gitconfig` | `~/.gitconfig` | delta pager, meld difftool, gh credential helper |
 | `dot_config/nvim/` | `~/.config/nvim/` | lazy.nvim; first launch installs plugins |
 | `dot_config/tmux/tmux.conf` | `~/.config/tmux/tmux.conf` | TPM plugins are cloned separately |
-| `symlink_dot_tmux.conf` | `~/.tmux.conf` | symlink → `../.config/tmux/tmux.conf` |
+| `symlink_dot_tmux.conf` | `~/.tmux.conf` | symlink → `.config/tmux/tmux.conf` (relative, resolves to `~/.config/tmux/tmux.conf`) |
 | `dot_config/starship/starship.toml` | `~/.config/starship/starship.toml` | icon prompt, WSL tuning |
 | `dot_config/systemd/user/openviking.service` | `~/.config/systemd/user/` | user unit, no sudo |
 | `dot_pi/agent/` | `~/.pi/agent/` | pi config, extensions, vendored skill |
