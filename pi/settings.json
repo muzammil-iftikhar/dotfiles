@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.2",
   "theme": "dark",
   "defaultProvider": "opencode-go",
   "defaultModel": "deepseek-v4.1-flash",
@@ -9,7 +9,6 @@
     "git:github.com/pasky/chrome-cdp-skill@v1.0.1",
     "git:github.com/DietrichGebert/ponytail",
     "git/github.com/latentminds-ai/pi-quotas",
-    "npm:pi-observational-memory",
     "npm:@plannotator/pi-extension",
     "https://github.com/ayghri/i-have-adhd",
     "https://github.com/cathrynlavery/diagram-design"
@@ -24,5 +23,9 @@
     "+builtin:mcp"
   ],
   "tuiMode": "fullscreen",
-  "hideThinkingBlock": true
+  "hideThinkingBlock": false,
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.47.0",
+    "{\"source\":\"git/github.com/latentminds-ai/pi-quotas\",\"scope\":\"user\"}": "0.5.0"
+  }
 }

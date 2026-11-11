@@ -10,7 +10,7 @@ This directory is a plain collection of config files — **not** managed via sym
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `.zshrc`          | Primary shell config — the hub that ties everything together                                                           |
 | `.gitconfig`      | Git identity (real name/email + Windows paths), delta diff pager, meld difftool/mergetool (bridged to Windows), aliases |
-| `tmux.conf`       | Tmux configuration (status line, keybindings, mouse); installed as `~/.tmux.conf`                                       |
+| `tmux.conf`       | Tmux configuration (status line, keybindings, mouse); live copy is `~/.config/tmux/tmux.conf`, with `~/.tmux.conf` symlinked to it |
 | `.vimrc`          | Legacy Vim config, kept alongside the Neovim setup                                                                     |
 | `update.sh`       | System maintenance: apt, snap, rustup, cargo, npm, claude, pi                                                          |
 | `exa-wrapper.sh`  | Wrapper translating `ls` flags to `exa` flags; aliased to `ls` only when `exa` is installed (legacy — see below)       |
@@ -70,7 +70,8 @@ DOTFILES="$HOME/personal/dotfiles"
 # Shell / git / tmux / vim
 cp "$DOTFILES/.zshrc"      ~/.zshrc
 cp "$DOTFILES/.gitconfig"  ~/.gitconfig
-cp "$DOTFILES/tmux.conf"   ~/.tmux.conf
+cp "$DOTFILES/tmux.conf"   ~/.config/tmux/tmux.conf
+ln -sfn ~/.config/tmux/tmux.conf ~/.tmux.conf
 cp "$DOTFILES/.vimrc"      ~/.vimrc
 
 # Wrapper scripts (referenced via ~/ paths) — keep them executable

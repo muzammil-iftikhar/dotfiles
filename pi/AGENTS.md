@@ -8,8 +8,7 @@
 
 ## Planning & Execution
 
-- Enter plan mode for any non-trivial task (3+ steps or architectural decisions); small one-off fixes skip planning and todo.md
-- For non-trivial tasks, write detailed specs upfront in `tasks/todo.md` with checkable items; mark items complete as you go
+- Enter plan mode for any non-trivial task (3+ steps or architectural decisions); small one-off fixes skip planning
 - Check in with the user to verify the plan before starting implementation of non-trivial tasks
 - Check in again after the first working slice on long tasks - catch drift early
 - If something goes sideways, STOP and re-plan immediately - don't keep pushing
@@ -26,22 +25,18 @@
 - If the repo has no tests, write a minimal throwaway smoke test (clean it up after) or demonstrate the behavior, then say exactly what you verified
 - Diff behavior between main and your changes when relevant
 - Challenge your own work before presenting it: "Would a Staff engineer approve this?"
-- Document results in a review section of `tasks/todo.md`
 - When unsure about a fact or behavior, verify rather than fabricate; say so when you don't know
 
 ## Autonomous Bug Fixing
 
+- **No fix proposal without the file:line that produces the behaviour - a symptom is not a mechanism.** If you cannot cite the line, stop and go read it
 - When given a bug report: just fix it. Point at logs, errors, failing tests - then resolve them
 - Fix clearly-scoped bugs autonomously - no permission needed; only ask when the fix involves a judgment call or crosses scope
 - After ~2-3 failed attempts on the same problem, stop and report rather than pushing on
 
 ## Communication
 
-- Be concise - lead with the answer or action, not the reasoning; include only what's necessary
-- Explain changes with a one-line high-level summary at each step
-- Ask clarifying questions rather than assuming; don't assume context - verify before acting on assumptions
-- Present options when multiple valid approaches exist
-- Communicate blockers clearly - don't silently stall
+- Make and state the assumptions needed to keep moving; ask only when a wrong assumption would be costly or irreversible
 - Before installing new packages or tools, ask - they may not want changes to their environment
 
 ## Safety
@@ -49,14 +44,28 @@
 - Pause and confirm before any destructive or irreversible command: rm -rf, force pushes, branch deletion, mass edits, anything touching production or data
 - Commit at logical checkpoints with clear messages; never commit secrets or generated files; follow the repo's branch conventions
 
-## Lessons & Memory
+## Memory
 
-- After ANY correction from the user: update `tasks/lessons.md` with rules that prevent the same mistake, and ruthlessly iterate until the mistake rate drops
-- Review lessons at session start for relevant project
-- Save user preferences and feedback when explicitly given; don't save ephemeral task details to memory - use tasks or plans instead
+- Save user preferences and feedback when explicitly given; don't save ephemeral task details to memory
 - Verify memories are still current before acting on them
 
 ## Working with Existing Code Files
 
 - NEVER modify or uncomment code that was originally commented - only modify comments/code added during the current session
 - When asked to "uncomment" sections, first verify which were originally commented vs newly added; if unsure, ask the user
+
+<!-- openviking:start -->
+## Working with OpenViking
+
+- Before work that needs background, start with the context OpenViking brings in automatically; if it isn't enough, look it up with the OpenViking `search` tool (`mode="context"`), and use `read` when you need the original. What you find is reference material; if it conflicts with what I say now, I win.
+- When the work produces important decisions (with the reasons), progress and next steps, or work output such as designs, research and deliverables, store them in OpenViking on your own, as a working basis that can keep being updated and referred to later; when a new decision replaces an old one, update the original record. Store a copy of work output whether it was written in the conversation or into a local file by you.
+- Everyday conversation doesn't need storing separately; the plugin saves it. Don't store secrets. Don't scan or upload files that have nothing to do with this work and that I didn't mention.
+- When continuing a project, first look at the progress, decisions and output stored for it earlier.
+- In a turn where you used useful information from OpenViking, or stored something, end the reply with one sentence: what you used and where it is stored. If nothing was used, say nothing.
+
+### Where things go
+
+- My work goes under `viking://user/muzammil/resources/`, one subfolder per project: `<project>` is the repository name or what I call this work; if a matching folder already exists, use it.
+- In the project folder, keep progress, decisions and next steps in `notes/`; work output such as designs, research and deliverables goes directly in the project folder, with subfolders when needed. Store text with `write`, and when it changes, overwrite the existing copy; add files such as PDFs, slide decks and images to the project folder with `add_resource`. After writing, read it back with `read` to check.
+- Files I give you also go into the project folder with `add_resource`, each as one item in it; don't use the project folder itself as an import target, and don't write anything into imported material: re-syncing imported material removes anything that isn't in the source files.
+<!-- openviking:end -->

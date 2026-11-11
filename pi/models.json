@@ -2,6 +2,12 @@
   "providers": {
     "openai-codex": {
       "modelOverrides": {
+        "gpt-6.1-sol": {
+          "contextWindow": 1050000
+        },
+        "gpt-6.1-terra": {
+          "contextWindow": 1050000
+        },
         "gpt-6-sol": {
           "contextWindow": 1050000
         },
@@ -9,6 +15,13 @@
           "contextWindow": 1050000
         },
         "gpt-6-luna": {
+          "contextWindow": 1050000
+        }
+      }
+    },
+    "openai": {
+      "modelOverrides": {
+        "gpt-6.1-sol": {
           "contextWindow": 1050000
         }
       }

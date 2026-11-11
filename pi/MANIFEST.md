@@ -3,8 +3,8 @@
 - **Source dir:** `~/.pi/agent` (`/home/muzammil/.pi/agent`)
 - **Location:** `dotfiles/pi/` (this directory), mirroring `~/.pi/agent/`. Not named `.pi/` on purpose: `.pi/` is pi's own project-config location, so pi running with this repo as cwd installed npm packages and cloned packages into it, regenerating **89M / 10,883 files** of runtime state (since deleted).
 - **Host:** Muzammil-Laptop
-- **Date (ISO):** 2026-10-24T03:07:23+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
-- **pi version:** `1.4.0` (from `/home/muzammil/.pi/agent/install/releases/1.4.0/`; equals `install/current-version`; `settings.json` has `lastChangelogVersion: 1.4.0`)
+- **Date (ISO):** 2026-11-11T22:27:48+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
+- **pi version:** `1.5.2` (from `/home/muzammil/.pi/agent/install/releases/1.5.2/`; equals `install/current-version`; `settings.json` has `lastChangelogVersion: 1.5.2`)
 - **Purpose:** Version-control the hand-written, portable parts of the pi agent config (settings, extensions, prompt snippets, wrapper), excluding secrets, session data, caches and multi-hundred-MB re-installable/re-clonable trees.
 
 **Policy:** nothing with a git remote is vendored here — it is referenced by https URL + full SHA. Only files with no remote are copied.
@@ -17,14 +17,14 @@ Copied with `cp -a` (mode + timestamps preserved); `skills/find-skills/` used `c
 
 | Path (relative to `pi/`) | Bytes | Mode |
 | --- | ---: | --- |
-| `AGENTS.md` | 4061 | 0664 |
-| `settings.json` | 790 | 0664 |
-| `models.json` | 296 | 0664 |
+| `AGENTS.md` | 5708 | 0664 |
+| `settings.json` | 958 | 0664 |
+| `models.json` | 567 | 0664 |
 | `mcp.json` | 269 | 0644 |
 | `trust.json` | 201 | 0664 |
 | `bin/pi` | 1467 | 0755 (executable) |
 | `extensions/ask-user-question.ts` | 20411 | 0664 |
-| `extensions/quotas.json` | 134 | 0664 |
+| `extensions/quotas.json` | 138 | 0664 |
 | `extensions/prompt-snippets/README.md` | 2095 | 0664 |
 | `extensions/prompt-snippets/index.ts` | 11655 | 0664 |
 | `extensions/prompt-snippets/snippets/ask-questions.md` | 257 | 0664 |
@@ -34,16 +34,19 @@ Copied with `cp -a` (mode + timestamps preserved); `skills/find-skills/` used `c
 | `extensions/prompt-snippets/snippets/parallel-plan-implementation.md` | 499 | 0644 |
 | `extensions/prompt-snippets/snippets/session-kickoff.md` | 280 | 0664 |
 | `extensions/prompt-snippets/snippets/verify-not-assume.md` | 343 | 0664 |
-| `extensions/prompt-snippets/snippets/worktree-orchestration.md` | 1015 | 0644 |
+| `extensions/prompt-snippets/snippets/worktree-orchestration.md` | 1028 | 0644 |
 | `skills/find-skills/` | 12K (1 file) | dir, **vendored** from `~/.agents/skills/find-skills` (`cp -aL`, real directory) |
 | `skills/find-skills/SKILL.md` | 5472 | 0664 |
+| `extensions/openviking/` | 896K (78 files) | dir, **vendored** — hand-written extension with **no git remote**; `node_modules/` excluded (see Excluded) |
 | `MANIFEST.md` | — | 0644 (this file; not part of the restore) |
 
-Directories (implicitly): `bin/` 0755, `extensions/` 0755, `extensions/prompt-snippets/` 0775, `extensions/prompt-snippets/snippets/` 0775, `skills/` 0755, `skills/find-skills/` 0775.
+`extensions/openviking/` contents (78 files, no `node_modules/`): `index.ts`, `client.ts`, `config.ts`, `recall.ts`, `sync.ts`, `takeover.ts`, `tools.ts`, `package.json`, `package-lock.json` (so `npm ci` reproduces deps), `DESIGN.md`, `README.md`, `lib/` (11 generated `.mjs`/`.d.mts`), `shared/` (33 `.mjs`/`.d.mts`), `scripts/` (4), `tests/` (15, incl. `fixtures/`), `skills/` (4 `SKILL.md`: `openviking-memory`, `openviking-rule-search`, `openviking-skills`, `ov-experience-memory`).
 
-Total on disk: **148K, 20 files, zero symlinks** (`du -sh pi`; `find pi -type f | wc -l`; `find pi -type l | wc -l`).
+Directories (implicitly): `bin/` 0755, `extensions/` 0755, `extensions/prompt-snippets/` 0775, `extensions/prompt-snippets/snippets/` 0775, `extensions/openviking/` 0755 (`lib/`, `shared/`, `scripts/`, `tests/`, `skills/` all 0755), `skills/` 0755, `skills/find-skills/` 0775.
 
-> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so the Restore steps clone them and re-create the `pi-tmux-status.ts` symlink. `skills/find-skills/` is the one exception: it is vendored as a real directory precisely because it has no remote anywhere.
+Total on disk: **1.1M, 98 files, zero symlinks** (`du -sh pi`; `find pi -type f | wc -l`; `find pi -type l | wc -l`).
+
+> Note: neither `extensions/pi-tmux-status.ts` nor `extensions/pi-interactive-subagents/` is stored here — both have git remotes, so the Restore steps clone them and re-create the `pi-tmux-status.ts` symlink. Two entries are the exception, vendored as real files because they have no remote anywhere: `skills/find-skills/` and `extensions/openviking/`.
 
 ## Excluded
 
@@ -66,6 +69,7 @@ Not copied; sizes are `du -sh` on the source.
 | `pi-subagents/` | 8.0K | generated state |
 | `skills/` (rest of the dir) | 4.0K | the only source entry was the `find-skills` symlink; that skill has **no remote**, so it is vendored under `skills/find-skills/` (real directory) |
 | `extensions/pi-interactive-subagents/` | 158M (524K without `node_modules/`) | **not vendored at all** — it has a remote (the user's fork), so step 7 of Restore clones it from URL + pinned SHA |
+| `extensions/openviking/node_modules/` | 18M | re-installable — `package-lock.json` **is** vendored, so `npm ci` reproduces it exactly (step 9) |
 
 Also measured on the source (none of it stored, being re-installable, re-clonable, generated, session data or secrets): `install/` **306M**, `npm/` **283M**, `sessions/` **332M**, `git/` **396M**, `pi-quotas/node_modules` **293M**, `pi-interactive-subagents/node_modules` **158M**, `models-store.json` (308K), `pi-crash.log` (3.2M), and the `mcp-*cache` / `usage-cache` / `backups/` / `missions/` / `pi-subagents/` / `run-history.jsonl` entries above.
 
@@ -77,13 +81,13 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 | Path (relative to `~/.pi/agent`) | https clone URL | commit (full SHA) |
 | --- | --- | --- |
-| `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `09c434ab73ca43761c5d8b0c5d341926c2fba710` |
+| `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` |
 | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
-| `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `7a12007b5a4246894f342a2e52e78facbc62eca3` |
-| `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `61b35e74cf621b979936f016633eb2cded7f57c3` |
+| `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `f2496acbde9f45ccb55c24d4f75210c8a1355df8` |
+| `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `3fbff2303c8dea02f160abf5c56337298baac9c1` |
 | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
 | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
-| `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `4ea1194f50d8f36feccdc11f2aac760252750966` |
+| `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `cdcbaa9553566efddb6da29a7927bb43f714c1b8` |
 
 **https URLs, not ssh**, so the restore works without SSH keys. Three live under `muzammil-iftikhar` (`pi-quotas`, `pi-tmux-status`, the `pi-interactive-subagents` fork); `pi-quotas` and `pi-tmux-status` are **private**, so cloning them over https needs an account with access (token/credential helper).
 
@@ -112,7 +116,7 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 Manual, numbered — there is no script. Run everything from the repo root; `pi/` below is this backup tree.
 
-1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.4.0`**) so that `~/.pi/agent/install/` exists before anything else.
+1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.5.2`**) so that `~/.pi/agent/install/` exists before anything else. `bin/pi` is version-agnostic — it reads `install/current-version` — so any release works, not only 1.5.2.
 2. **Create the tree:** `mkdir -p ~/.pi/agent/{bin,extensions,skills,git/github.com}`
 3. **Copy the five config files** into `~/.pi/agent/`:
    `cp -a pi/AGENTS.md pi/settings.json pi/models.json pi/mcp.json pi/trust.json ~/.pi/agent/`
@@ -122,6 +126,7 @@ Manual, numbered — there is no script. Run everything from the repo root; `pi/
    ```sh
    cp -a pi/extensions/ask-user-question.ts pi/extensions/quotas.json ~/.pi/agent/extensions/
    cp -a pi/extensions/prompt-snippets ~/.pi/agent/extensions/
+   cp -a pi/extensions/openviking ~/.pi/agent/extensions/
    ```
 6. **Copy the skill as a REAL directory — never a symlink:**
    `cp -aL pi/skills/find-skills ~/.pi/agent/skills/find-skills`
@@ -134,13 +139,13 @@ Manual, numbered — there is no script. Run everything from the repo root; `pi/
 
    | `<target>` (relative to `~/.pi/agent`) | `<url>` | `<sha>` |
    | --- | --- | --- |
-   | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `09c434ab73ca43761c5d8b0c5d341926c2fba710` |
+   | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` |
    | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
-   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `7a12007b5a4246894f342a2e52e78facbc62eca3` |
-   | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `61b35e74cf621b979936f016633eb2cded7f57c3` |
+   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `f2496acbde9f45ccb55c24d4f75210c8a1355df8` |
+   | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `3fbff2303c8dea02f160abf5c56337298baac9c1` |
    | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
    | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
-   | `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `4ea1194f50d8f36feccdc11f2aac760252750966` |
+   | `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `cdcbaa9553566efddb6da29a7927bb43f714c1b8` |
 
    - `pi-quotas` **must** land in the `latentminds-ai/pi-quotas` directory: `settings.json` references that path, not one derived from its remote (`muzammil-iftikhar/pi-quotas`).
    - `pi-interactive-subagents` **must** come from **https://github.com/muzammil-iftikhar/pi-interactive-subagents** — the user's fork. Upstream `amosblomqvist/…` does not contain the pinned commit `4ea1194`.
@@ -151,7 +156,8 @@ Manual, numbered — there is no script. Run everything from the repo root; `pi/
            ~/.pi/agent/extensions/pi-tmux-status.ts
    ```
    Verify the target exists first — otherwise the extension silently will not load.
-9. **Install npm deps** (`npm ci --no-audit --no-fund`) in exactly two trees, both of which ship a `package-lock.json`:
+9. **Install npm deps** (`npm ci --no-audit --no-fund`) in exactly three trees, all of which ship a `package-lock.json`:
    - `~/.pi/agent/git/github.com/latentminds-ai/pi-quotas`
    - `~/.pi/agent/extensions/pi-interactive-subagents`
+   - `~/.pi/agent/extensions/openviking` (its `node_modules/` is excluded from this backup)
 10. **Manual steps afterwards.** `auth.json` / `mcp-auth.json` are **secrets and deliberately never stored** — authenticate providers with the login flow. If you use the context7 MCP server, supply its API key (it was blanked in `mcp.json`). Verify `defaultProvider` / `defaultModel` in `settings.json`. Then restart pi.
