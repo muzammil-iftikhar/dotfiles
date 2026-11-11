@@ -1,7 +1,7 @@
 # pi agent config backup — MANIFEST
 
 - **Source dir:** `~/.pi/agent` (`/home/muzammil/.pi/agent`)
-- **Location:** `dotfiles/pi/` (this directory), mirroring `~/.pi/agent/`. Not named `.pi/` on purpose: `.pi/` is pi's own project-config location, so pi running with this repo as cwd installed npm packages and cloned packages into it, regenerating **89M / 10,883 files** of runtime state (since deleted).
+- **Location:** `dotfiles/home/dot_pi/agent/` in the chezmoi source state, mirroring `~/.pi/agent/`. Every entry is applied with `chezmoi apply ~/.pi/agent`; chezmoi's `dot_` prefix encodes the leading dot, so `dot_pi/agent` is `~/.pi/agent`.
 - **Host:** Muzammil-Laptop
 - **Date (ISO):** 2026-11-11T22:27:48+05:00 (no-remote files vendored; everything with a remote is referenced by https URL + full SHA and rebuilt from the Clone tables in this document)
 - **pi version:** `1.5.2` (from `/home/muzammil/.pi/agent/install/releases/1.5.2/`; equals `install/current-version`; `settings.json` has `lastChangelogVersion: 1.5.2`)
@@ -13,9 +13,9 @@
 
 ## Copied
 
-Copied with `cp -a` (mode + timestamps preserved); `skills/find-skills/` used `cp -aL` (dereferencing the symlink it was on the source machine). Bytes are as copied.
+Tracked by chezmoi (contents copied from `~/.pi/agent`); `skills/find-skills/` used `cp -aL` (dereferencing the symlink it was on the source machine). Bytes are as copied.
 
-| Path (relative to `pi/`) | Bytes | Mode |
+| Path (relative to `home/dot_pi/agent/`) | Bytes | Mode |
 | --- | ---: | --- |
 | `AGENTS.md` | 5708 | 0664 |
 | `settings.json` | 958 | 0664 |
@@ -114,50 +114,22 @@ Every repo under `~/.pi/agent/git/`, plus `extensions/pi-interactive-subagents`.
 
 ## Restore
 
-Manual, numbered — there is no script. Run everything from the repo root; `pi/` below is this backup tree.
+**Managed by chezmoi** — there is no manual copy step any more. These files are the `home/dot_pi/agent/` source state, so any machine with the repo gets them with one command:
 
-1. **Install pi itself first.** `bin/pi` in this backup is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (the config here is from pi **`1.5.2`**) so that `~/.pi/agent/install/` exists before anything else. `bin/pi` is version-agnostic — it reads `install/current-version` — so any release works, not only 1.5.2.
-2. **Create the tree:** `mkdir -p ~/.pi/agent/{bin,extensions,skills,git/github.com}`
-3. **Copy the five config files** into `~/.pi/agent/`:
-   `cp -a pi/AGENTS.md pi/settings.json pi/models.json pi/mcp.json pi/trust.json ~/.pi/agent/`
-4. **Copy the wrapper and make it executable:**
-   `cp -a pi/bin/pi ~/.pi/agent/bin/pi && chmod 0755 ~/.pi/agent/bin/pi`
-5. **Copy the no-remote extension files only** (nothing else in `extensions/` is vendored).
-   ```sh
-   cp -a pi/extensions/ask-user-question.ts pi/extensions/quotas.json ~/.pi/agent/extensions/
-   cp -a pi/extensions/prompt-snippets ~/.pi/agent/extensions/
-   cp -a pi/extensions/openviking ~/.pi/agent/extensions/
-   ```
-6. **Copy the skill as a REAL directory — never a symlink:**
-   `cp -aL pi/skills/find-skills ~/.pi/agent/skills/find-skills`
-   On the source machine this was a symlink to `~/.agents/skills/find-skills`, which is outside pi and is not backed up; the real files are vendored here.
-7. **Clone the 7 repos** into their exact path column. `cd ~/.pi/agent` first — the targets below are relative to that directory, not to the repo root:
-   ```sh
-   git clone <url> <target> && git -C <target> fetch --depth 1 origin <sha> && git -C <target> checkout --detach <sha>
-   ```
-   If the `--depth 1` fetch of an unreferenced SHA is refused, run `git -C <target> fetch origin` first, then `git -C <target> checkout --detach <sha>`.
+```sh
+chezmoi apply ~/.pi/agent     # pi only
+chezmoi apply                 # everything
+```
 
-   | `<target>` (relative to `~/.pi/agent`) | `<url>` | `<sha>` |
-   | --- | --- | --- |
-   | `git/github.com/DietrichGebert/ponytail` | `https://github.com/DietrichGebert/ponytail` | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` |
-   | `git/github.com/ayghri/i-have-adhd` | `https://github.com/ayghri/i-have-adhd` | `1ecea1993b7fce257ffbd686c070948b5e07eda6` |
-   | `git/github.com/cathrynlavery/diagram-design` | `https://github.com/cathrynlavery/diagram-design` | `f2496acbde9f45ccb55c24d4f75210c8a1355df8` |
-   | `git/github.com/latentminds-ai/pi-quotas` | `https://github.com/muzammil-iftikhar/pi-quotas` | `3fbff2303c8dea02f160abf5c56337298baac9c1` |
-   | `git/github.com/muzammil-iftikhar/pi-tmux-status` | `https://github.com/muzammil-iftikhar/pi-tmux-status` | `1e20835a8da52bfbc3ff36088fc60bf3c1e986e2` |
-   | `git/github.com/pasky/chrome-cdp-skill` | `https://github.com/pasky/chrome-cdp-skill` | `b7fa631fb8201ef42dab040f3ce20fca1790abb0` |
-   | `extensions/pi-interactive-subagents` | `https://github.com/muzammil-iftikhar/pi-interactive-subagents` | `cdcbaa9553566efddb6da29a7927bb43f714c1b8` |
-
-   - `pi-quotas` **must** land in the `latentminds-ai/pi-quotas` directory: `settings.json` references that path, not one derived from its remote (`muzammil-iftikhar/pi-quotas`).
-   - `pi-interactive-subagents` **must** come from **https://github.com/muzammil-iftikhar/pi-interactive-subagents** — the user's fork. Upstream `amosblomqvist/…` does not contain the pinned commit `4ea1194`.
-   - Two of these are **private** (`pi-quotas`, `pi-tmux-status`), so the https clones need credentials with access.
-8. **Re-create the one symlink, after step 7** (it is not vendored):
+1. **Install pi first.** `bin/pi` is only a wrapper; the real install (`~/.pi/agent/install/`, ~306M) is **not backed up**. Install pi (this config is from **`1.5.2`**) so `~/.pi/agent/install/` exists. `bin/pi` reads `install/current-version`, so any release works.
+2. **Apply the config:** `chezmoi apply ~/.pi/agent`. `create_mcp.json` is `create_`-attributed: it is written when absent and **never overwritten**, so a key you filled in survives every later apply.
+3. **Clone the 7 repos** from the Clone table above into their exact paths under `~/.pi/agent/`.
+4. **Re-create the one symlink**, after the clones (it is not vendored):
    ```sh
    ln -sfn ~/.pi/agent/git/github.com/muzammil-iftikhar/pi-tmux-status/pi-tmux-status.ts \
            ~/.pi/agent/extensions/pi-tmux-status.ts
    ```
-   Verify the target exists first — otherwise the extension silently will not load.
-9. **Install npm deps** (`npm ci --no-audit --no-fund`) in exactly three trees, all of which ship a `package-lock.json`:
-   - `~/.pi/agent/git/github.com/latentminds-ai/pi-quotas`
-   - `~/.pi/agent/extensions/pi-interactive-subagents`
-   - `~/.pi/agent/extensions/openviking` (its `node_modules/` is excluded from this backup)
-10. **Manual steps afterwards.** `auth.json` / `mcp-auth.json` are **secrets and deliberately never stored** — authenticate providers with the login flow. If you use the context7 MCP server, supply its API key (it was blanked in `mcp.json`). Verify `defaultProvider` / `defaultModel` in `settings.json`. Then restart pi.
+5. **Install npm deps** in the three trees that ship a `package-lock.json`: `extensions/openviking` (`node_modules` is excluded from the repo), `git/github.com/latentminds-ai/pi-quotas`, `extensions/pi-interactive-subagents`. `run_onchange_after_pi-node-deps.sh` in the source state does this automatically on `chezmoi apply` for whichever of the three exist.
+6. **Authenticate and fill secrets.** `auth.json` / `mcp-auth.json` are secrets and never stored — log in with the provider flows. Fill the blanked context7 `--api-key` in `~/.pi/agent/mcp.json`. Then restart pi.
+
+`skills/find-skills/` is vendored in the source state but listed in `.chezmoiignore`: on this machine `~/.pi/agent/skills/find-skills` is a symlink into `~/.agents/skills` (installed by `vercel-labs/skills`), so chezmoi must not replace it. On a machine without that symlink, copy the directory in by hand.
