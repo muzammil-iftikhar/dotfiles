@@ -88,6 +88,25 @@ On a fresh machine those files are created blank; fill them once. Fill in the
 `CHUTES_OPENAI_API_KEY`, `MINIMAX_API_KEY`) the same way — they are empty strings
 in the repo. `pi/settings.json` deliberately stores no `deviceId`; pi regenerates it.
 
+## On this machine: never run `chezmoi apply`
+
+This machine is the source of truth for the repo. `chezmoi apply` writes **repo → `$HOME`**
+and overwrites live files, so it is not part of the daily flow here. On this machine the
+arrow points the other way:
+
+```bash
+chezmoi re-add ~/.zshrc ~/.pi/agent/settings.json   # machine -> repo
+chezmoi status                                      # what still differs
+git add -A && git commit && git push                # publish
+```
+
+`chezmoi apply` is for a **new machine**, or for deliberately resetting one file to the repo
+version. To test the target state without touching anything real:
+
+```bash
+chezmoi apply --destination /tmp/test-home          # throwaway home
+```
+
 ## Keeping it up to date
 
 ```bash
