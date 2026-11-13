@@ -72,6 +72,19 @@ Never committed. The repo carries them blanked; fill them in on the machine afte
 | `~/.zshrc` | — | `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, `CHUTES_OPENAI_API_KEY`, `MINIMAX_API_KEY` (empty strings in the repo; edit your copy directly — nothing will overwrite it) |
 | `pi/settings.json` | — | no `deviceId` stored; pi generates its own |
 
+## Checking for drift
+
+```bash
+./check-drift.sh        # 157 files: in sync / drifted / missing
+./check-drift.sh -v     # plus the diff for each drifted file
+```
+
+Exit 0 = repo matches the machine. It is read-only and masks the values that are
+blanked on purpose (API keys in `.zshrc`, `ov.conf`, `ovcli.conf`, `mcp.json`), so those
+never show up as false drift. Files it compares: `.zshrc`, `.gitconfig`, `tmux.conf`,
+`starship.toml`, both wrappers, `openviking/*`, all of `nvim/` and `pi/`, and the
+`~/.tmux.conf` symlink.
+
 ## Refreshing the backup
 
 The arrow only ever points `$HOME` → repo. Copy the live file over the repo copy and commit:
