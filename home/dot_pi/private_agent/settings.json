@@ -14,11 +14,6 @@
     "https://github.com/cathrynlavery/diagram-design"
   ],
   "defaultThinkingLevel": "high",
-  "observational-memory": {
-    "compactAfterTokens": 81000,
-    "compactAfterTokensMode": "ratio",
-    "compactAfterTokensRatio": 0.5
-  },
   "extensions": [
     "+builtin:mcp"
   ],

@@ -286,8 +286,21 @@ export default async function (pi: ExtensionAPI) {
     }
 
     const additions = parts.join("\n\n");
-    if (!additions) return;
 
+    // Additions go in as a section, not as a rewritten systemPrompt: a returned
+    // systemPrompt sets forceSystemPrompt, and pi then drops every other system
+    // message — including the sections other extensions add after this handler
+    // (ponytail's ruleset, for one). Sections also keep the cached prefix.
+    const sections = event.systemPromptOptions?.sections;
+    if (sections && typeof sections === "object") {
+      // Clear rather than leave stale: an omitted section is recorded as removed.
+      if (additions) sections.openviking = additions;
+      else delete sections.openviking;
+      return;
+    }
+
+    // Older pi without systemPromptOptions.sections.
+    if (!additions) return;
     return {
       systemPrompt: event.systemPrompt + "\n\n" + additions,
     };

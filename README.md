@@ -101,6 +101,10 @@ chezmoi cd                # shell in the source dir, then git commit/push
 `chezmoi status` being silent means the repo and this machine are identical; `chezmoi verify`
 exits non-zero if anything differs, and `chezmoi doctor` checks the setup itself.
 
+If you edited a managed file live and meant it, `chezmoi re-add <path>` pulls it into the repo.
+If you meant to discard the edit, `chezmoi apply --force <path>` (plain `apply` stops and asks,
+which fails in a script or an agent shell).
+
 ## `extras/` — not managed
 
 Kept in the repo for reference, never applied by chezmoi:
